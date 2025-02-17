@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FinancialPlanningApplication<FinancialPlanning>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.group_2.FinancialPlanning.FinancialPlanningApplication",
+            "projectName": "FinancialPlanning",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
