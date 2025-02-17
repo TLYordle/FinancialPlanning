@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserCreationRequest {
-    private String full_name;
-    private String password;
-    private String email;
+@AllArgsConstructor
+@Builder
+public class PermissionRequest {
+    private String name;
+    private String description;
 }

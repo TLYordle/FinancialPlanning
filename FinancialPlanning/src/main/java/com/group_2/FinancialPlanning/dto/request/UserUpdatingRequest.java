@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreationRequest {
-    private String full_name;
+public class UserUpdatingRequest {
     private String password;
-    private String email;
+    private String full_name;
+    List<String> roles;
 }

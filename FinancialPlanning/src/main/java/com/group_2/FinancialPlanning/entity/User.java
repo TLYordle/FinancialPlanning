@@ -22,21 +22,19 @@ public class User {
 
     private String full_name;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String email;
+
+
     @ManyToMany
     private Set<Role> roles;
-
+    
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Planning> finacial_plan_detail
 }
