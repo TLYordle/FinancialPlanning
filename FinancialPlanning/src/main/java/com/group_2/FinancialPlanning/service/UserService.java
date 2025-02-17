@@ -50,7 +50,7 @@ public class UserService {
 
     public UserResponse createUser(UserCreationRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new AppException(ErrorCode.USERNAME_EXISTED);
+            throw new AppException(ErrorCode.EMAIL_EXISTED);
         }
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
