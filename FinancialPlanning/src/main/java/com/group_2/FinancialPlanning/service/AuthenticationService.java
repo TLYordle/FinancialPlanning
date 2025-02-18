@@ -197,4 +197,14 @@ public class AuthenticationService {
         }
         return stringJoiner.toString();
     }
+
+//    public void forgotPassword(String email) {
+//        User user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND));
+//
+//        String newPassword = UUID.randomUUID().toString();
+//    }
+//
+//    public String generateRandomPassword(){
+//        int length = 8;
+//    }
 }

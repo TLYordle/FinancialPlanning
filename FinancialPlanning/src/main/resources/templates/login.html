@@ -5,30 +5,30 @@
 <body class="bg-[#f5f7e9] flex items-center justify-center min-h-screen">
     <div class="w-full max-w-xs">
         <h1 class="text-2xl font-bold text-center mb-8">Financial Planning System</h1>
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onsubmit="login(event)">
             <div class="mb-4">
                 <label class="block text-black text-sm font-bold mb-2" for="email">
                     Email Address
                 </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email Address">
+                <input name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email Address">
             </div>
             <div class="mb-6">
                 <label class="block text-black text-sm font-bold mb-2" for="password">
                     Password
                 </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+                <input name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
             </div>
             <div class="flex items-center justify-between">
-                <a class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800" href="#">
+                <a onclick="forgotPassword()" class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800" href="#">
                     Forgot password?
                 </a>
             </div>
             <div class="flex items-center justify-center mt-4">
-                <button class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                    Login
-                </button>
+                <input type="submit" value="Login" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"></input>
             </div>
         </form>
     </div>
+
+    <script src="./js/login.js" type="text/javascript"></script>
 </body>
 </html>

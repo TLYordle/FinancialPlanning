@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(500, "Uncategorized exception", HttpStatus.INTERNAL_SERVER_ERROR),
+    EMAIL_NOT_FOUND(404, "Email not found", HttpStatus.NOT_FOUND),
     USER_NOT_FOUND(404,"User not found", HttpStatus.NOT_FOUND),
     EMAIL_EXISTED(409,"Email already existed", HttpStatus.CONFLICT),
     UNAUTHENTICATED(401,"Unauthenticated", HttpStatus.UNAUTHORIZED),

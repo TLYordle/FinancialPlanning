@@ -57,4 +57,8 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+//    @PostMapping("/forgot-password")
+//    ApiResponse<String> forgotPassword(@RequestBody String email){
+//        authenticationService.forgotPassword(email);
+//    }
 }

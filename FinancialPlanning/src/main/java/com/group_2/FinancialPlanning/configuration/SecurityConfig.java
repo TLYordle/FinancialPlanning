@@ -55,7 +55,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.addAllowedOrigin("http://localhost:3000"); // change if your domain is different
+        corsConfiguration.addAllowedOrigin("http://127.0.0.1:5500"); // change if your domain is different
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowCredentials(true);
