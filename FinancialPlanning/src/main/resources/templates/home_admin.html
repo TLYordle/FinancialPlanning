@@ -14,8 +14,8 @@
   </div>
   <div class="flex items-center">
     <div class="text-right mr-2">
-      <span class="block">tranglth</span>
-      <span class="text-sm text-gray-600">Accounting depart</span>
+      <span id = "full_name" class="block">tranglth</span>
+      <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
     </div>
     <i class="fas fa-user ml-2"></i>
     <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
@@ -54,5 +54,13 @@
     </div>
   </div>
 </div>
+<script>
+  var fullName = localStorage.getItem("full_name")
+  var role = localStorage.getItem("role")
+  var span = document.getElementById("full_name")
+  var spanRole = document.getElementById("role")
+  span.textContent = fullName
+  spanRole.textContent = role
+</script>
 </body>
 </html>

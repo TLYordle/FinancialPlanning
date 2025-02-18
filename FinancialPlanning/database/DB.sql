@@ -4,9 +4,9 @@ USE financial_planning;
 -- Bảng users
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) ,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user', 'manager') NOT NULL,
     is_active TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -108,12 +108,3 @@ CREATE TABLE user_sessions (
     session_token VARCHAR(255) UNIQUE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
-
-INSERT INTO users (full_name, email, password_hash, role, is_active)
-VALUES
-    ('Thanh An', 'rubikcuty29@gmail.com', 'hashedpassword1', 'admin', 1),
-    ('Thanh Lam', 'dothanhlampt30@gmail.com', 'hashedpassword2', 'user', 1),
-    ('Tran Lam', 'tranlam23072003@gmail.com', 'hashedpassword3', 'manager', 1),
-    ('Hai Duy', 'haiduy2k3@gmail.com', 'hashedpassword4', 'user', 1),
-    ('Khanh Duy', 'lekhanhduy271003@gmail.com', 'hashedpassword5', 'manager', 1),
-    ('Vo Hieu', 'vohieu972003@gmail.com', 'hashedpassword6', 'admin', 1);

@@ -30,7 +30,7 @@ event.preventDefault();
           localStorage.setItem("role", role)
           console.log(role);
           if(role === "ADMIN"){
-            // window.location.href = "home_admin.html";
+            window.location.href = "home_admin.html";
           }else{
             window.location.href = "home.html"
           }
