@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { background-color: #f5f5f5; }
+        .navbar { background-color: #adb5bd; }
+        .card { margin: 20px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .status-badge.active { background-color: #28a745; color: white; padding: 5px 10px; border-radius: 5px; }
+        .status-badge.inactive { background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+    <div class="flex items-center">
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+        </div>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+    </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="home_admin.html">Home</a>
+        <a class="text-black" href="#">Financial plan</a>
+        <a class="text-black" href="#">Financial Report</a>
+        <a class="text-black" href="#">Term Management</a>
+        <a class="text-black font-bold" href="list_user.html">User Management</a>
+    </nav>
+</div>
+
+    <div class="container mt-4">
+        <div class="card">
+            <h5>User Details</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Username:</strong> HoanNKK</p>
+                    <p><strong>Email:</strong> hoannkk@gmail.com</p>
+                    <p><strong>DOB:</strong> 02/02/1993</p>
+                    <p><strong>Department:</strong> IT</p>
+                    <p><strong>Role:</strong> Accountant</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Full Name:</strong> Nguyen Khiem Hoan</p>
+                    <p><strong>Phone Number:</strong> 0912345678</p>
+                    <p><strong>Address:</strong> 120 Kim Nguu, Hai Ba Trung, Hanoi</p>
+                    <p><strong>Position:</strong> Financial Audit Executive</p>
+                    <p><strong>Status:</strong> <span id="status" class="status-badge inactive">Inactive</span></p>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-end">
+                <button id="activate-btn" class="btn btn-success me-2">Activate User</button>
+                <button id="cancel-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/user_detail.js"></script>
+    <script>
+        var fullName = localStorage.getItem("full_name")
+        var role = localStorage.getItem("role")
+        var span = document.getElementById("full_name")
+        var spanRole = document.getElementById("role")
+        span.textContent = fullName
+        spanRole.textContent = role
+    </script>
+</body>
+</html>

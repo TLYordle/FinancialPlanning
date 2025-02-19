@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Financial Plan System - User List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+    <div class="flex items-center">
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+        </div>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+    </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="home_admin.html">Home</a>
+        <a class="text-black" href="#">Financial plan</a>
+        <a class="text-black" href="#">Financial Report</a>
+        <a class="text-black" href="#">Term Management</a>
+        <a class="text-black font-bold" href="list_user.html">User Management</a>
+    </nav>
+</div>
+<div class="bg-gray-100 flex justify-center min-h-screen">
+<div class="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl" style="margin-top: 30px">
+    <h2 class="text-xl font-semibold mb-4">User List</h2>
+    <div class="flex items-center mb-4">
+        <input type="text" placeholder="Search by user name" class="border border-gray-300 rounded-md p-2 mr-2 flex-grow">
+        <select class="border border-gray-300 rounded-md p-2 mr-2">
+            <option>Select Role</option>
+        </select>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Search</button>
+        <button class="bg-green-500 text-white px-4 py-2 rounded-md ml-2"><a href="create_user.html">Add</a></button>
+    </div>
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+        <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">Username</th>
+            <th class="py-2 px-4 border-b">Email</th>
+            <th class="py-2 px-4 border-b">Department</th>
+            <th class="py-2 px-4 border-b">Position</th>
+            <th class="py-2 px-4 border-b">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="py-2 px-4 border-b">0001</td>
+            <td class="py-2 px-4 border-b">Nguyễn Thanh An</td>
+            <td class="py-2 px-4 border-b">NTA@gmail...</td>
+            <td class="py-2 px-4 border-b">Software Development</td>
+            <td class="py-2 px-4 border-b">Tech Lead</td>
+            <td class="py-2 px-4 border-b">
+                <button class="text-blue-500"><i class="fas fa-eye"></i></button>
+                <button class="text-yellow-500 ml-2"><i class="fas fa-edit"></i></button>
+                <button class="text-red-500 ml-2"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+        <tr>
+            <td class="py-2 px-4 border-b">0002</td>
+            <td class="py-2 px-4 border-b">Trần Văn Lâm</td>
+            <td class="py-2 px-4 border-b">TVL@gmail...</td>
+            <td class="py-2 px-4 border-b">Accounting</td>
+            <td class="py-2 px-4 border-b">Accountant</td>
+            <td class="py-2 px-4 border-b">
+                <button class="text-blue-500"><a href="/FinancialPlanning/templates/user_detail.html"><i class="fas fa-eye"></i></a></button>
+                <button class="text-yellow-500 ml-2"><i class="fas fa-edit"></i></button>
+                <button class="text-red-500 ml-2"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/list_user.js"></script>
+    <script>
+        var fullName = localStorage.getItem("full_name")
+        var role = localStorage.getItem("role")
+        var span = document.getElementById("full_name")
+        var spanRole = document.getElementById("role")
+        span.textContent = fullName
+        spanRole.textContent = role
+    </script>
+</body>
+</html>

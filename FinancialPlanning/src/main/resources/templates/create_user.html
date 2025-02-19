@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body { background-color: #f5f5f5; }
+        .navbar { background-color: #adb5bd; }
+        .card { margin: 20px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    </style>
+    <style>
+        /* Chỉnh sửa để đảm bảo các phần tử trong row thẳng hàng */
+        .row.mb-3 {
+            display: flex;
+            align-items: center; /* Căn chỉnh tất cả các phần tử trong row theo chiều dọc */
+        }
+        
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .form-label {
+            margin-bottom: 0.5rem; /* Đảm bảo khoảng cách giữa text và input/select */
+        }
+    </style>
+</head>
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+    <div class="flex items-center">
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+        </div>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+    </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="home_admin.html">Home</a>
+        <a class="text-black" href="#">Financial plan</a>
+        <a class="text-black" href="#">Financial Report</a>
+        <a class="text-black" href="#">Term Management</a>
+        <a class="text-black font-bold" href="list_user.html">User Management</a>
+    </nav>
+</div>
+    <div class="container mt-4">
+        <div class="card">
+            <h5>Create User</h5>
+            <form id="createUserForm">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Username*</label>
+                        <input type="text" id="username" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Full Name*</label>
+                        <input type="text" id="fullName" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Email*</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Phone Number*</label>
+                        <input type="text" id="phoneNumber" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">DOB*</label>
+                        <input type="date" id="dob" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Address</label>
+                        <input type="text" id="address" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Department*</label>
+                        <select id="department" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Communication">Communication</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Accounting">Accounting</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Position*</label>
+                        <select id="position" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="Financial_Executive">Financial Executive</option>
+                            <option value="Project_manager">Project Manager</option>
+                            <option value="Office_Assistant">Office Assistant</option>
+                            <option value="Senior_Executive">Senior Executive</option>
+                            <option value="Accounting_Executive">Accounting Executive</option>
+                            <option value="Junior_Executive">Junior Executive</option>
+                            <option value="Intern">Intern</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Role*</label>
+                        <select class="form-select" id="role" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Financial_Staff">Financial Staff</option>
+                            <option value="Accountant">Accountant</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Status</label>
+                        <input type="text" id="status" value="Active" disabled required>
+                    </div>
+                    
+                    
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Notes</label>
+                    <textarea id="note" class="form-control"></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/create_user.js"></script>
+    <script src="js/header.js"></script>
+    <script>
+        var fullName = localStorage.getItem("full_name")
+        var role = localStorage.getItem("role")
+        var span = document.getElementById("full_name")
+        var spanRole = document.getElementById("role")
+        span.textContent = fullName
+        spanRole.textContent = role
+    </script>
+</body>
+</html>
