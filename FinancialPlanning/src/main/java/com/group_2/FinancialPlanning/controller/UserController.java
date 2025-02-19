@@ -1,6 +1,7 @@
 package com.group_2.FinancialPlanning.controller;
 
 import com.group_2.FinancialPlanning.dto.request.UserCreationRequest;
+import com.group_2.FinancialPlanning.dto.request.UserUpdatingRequest;
 import com.group_2.FinancialPlanning.dto.response.ApiResponse;
 import com.group_2.FinancialPlanning.dto.response.UserResponse;
 import com.group_2.FinancialPlanning.service.UserService;
@@ -46,6 +47,20 @@ public class UserController {
     ApiResponse<UserResponse> createUser(@RequestBody UserCreationRequest request){
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
+                .build();
+    }
+
+    @PutMapping("/{id}")
+    ApiResponse<UserResponse> updateUser(@PathVariable String id, @RequestBody UserUpdatingRequest request){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.editUser(id, request))
+                .build();
+    }
+
+    @DeleteMapping("/{id}")
+    ApiResponse<String> deleteUser(@PathVariable String id){
+        return ApiResponse.<String>builder()
+                .result(userService.deleteUser(id))
                 .build();
     }
 

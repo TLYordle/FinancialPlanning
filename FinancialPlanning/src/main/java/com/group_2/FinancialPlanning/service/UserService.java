@@ -2,6 +2,7 @@ package com.group_2.FinancialPlanning.service;
 
 import com.group_2.FinancialPlanning.constant.PredefinedRole;
 import com.group_2.FinancialPlanning.dto.request.UserCreationRequest;
+import com.group_2.FinancialPlanning.dto.request.UserUpdatingRequest;
 import com.group_2.FinancialPlanning.dto.response.UserResponse;
 import com.group_2.FinancialPlanning.entity.Role;
 import com.group_2.FinancialPlanning.entity.User;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,11 +46,12 @@ public class UserService {
 
     }
 
-    @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse getUserById(String userId) {
         return userMapper.toUserResponse(userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse createUser(UserCreationRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
@@ -70,6 +74,32 @@ public class UserService {
         User user = userRepository.findByEmail(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         return userMapper.toUserResponse(user);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse editUser(String id, UserUpdatingRequest request){
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        userMapper.toUpdateUser(request, user);
+        user.setUpdatedAt(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFull_name(request.getFull_name());
+
+        Set<Role> newRoles = request.getRoles().stream()
+                .map(roleName -> roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new RuntimeException("Role not found: " + roleName)))
+                .collect(Collectors.toSet());
+
+        user.setRoles(newRoles);
+
+        return userMapper.toUserResponse(userRepository.save(user));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteUser(String id){
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        user.setActive(false);
+        userRepository.save(user);
+        return "Xoa thanh cong";
     }
 
 }
