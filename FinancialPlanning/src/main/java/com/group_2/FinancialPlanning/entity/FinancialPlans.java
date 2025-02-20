@@ -19,9 +19,9 @@ public class FinancialPlans {
     @Column(name = "plan_name", nullable = false)
     private String planName;
 
-    @ManyToOne
-    @JoinColumn(name = "term_id")
-    private Term term;
+//    @ManyToOne
+//    @JoinColumn(name = "term_id")
+//    private Term term;
 
     @ManyToOne
     @JoinColumn(name = "uploaded_by")

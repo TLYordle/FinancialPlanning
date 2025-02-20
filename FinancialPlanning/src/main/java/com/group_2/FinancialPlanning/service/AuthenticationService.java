@@ -1,9 +1,6 @@
 package com.group_2.FinancialPlanning.service;
 
-import com.group_2.FinancialPlanning.dto.request.AuthenticationRequest;
-import com.group_2.FinancialPlanning.dto.request.IntrospectRequest;
-import com.group_2.FinancialPlanning.dto.request.LogoutRequest;
-import com.group_2.FinancialPlanning.dto.request.RefreshRequest;
+import com.group_2.FinancialPlanning.dto.request.*;
 import com.group_2.FinancialPlanning.dto.response.AuthenticationResponse;
 import com.group_2.FinancialPlanning.dto.response.IntrospectResponse;
 import com.group_2.FinancialPlanning.entity.InvalidatedToken;
@@ -12,6 +9,7 @@ import com.group_2.FinancialPlanning.exception.AppException;
 import com.group_2.FinancialPlanning.exception.ErrorCode;
 import com.group_2.FinancialPlanning.repository.InvalidatedTokenRepository;
 import com.group_2.FinancialPlanning.repository.UserRepository;
+import com.group_2.FinancialPlanning.utils.GeneratePasswordRandom;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -57,6 +55,11 @@ public class AuthenticationService {
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
 
+
+    GeneratePasswordRandom generatePasswordRandom;
+
+    EmailService emailService;
+
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
 
@@ -77,8 +80,8 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
-
-        if (!authenticated) {
+        boolean isActive = user.isActive();
+        if (!authenticated || !isActive) {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
 
@@ -198,13 +201,16 @@ public class AuthenticationService {
         return stringJoiner.toString();
     }
 
-//    public void forgotPassword(String email) {
-//        User user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND));
-//
-//        String newPassword = UUID.randomUUID().toString();
-//    }
-//
-//    public String generateRandomPassword(){
-//        int length = 8;
-//    }
+    public void forgotPassword(ForgotPasswordRequest request) {
+        String email = request.getEmail();
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND));
+
+        String newPassword = generatePasswordRandom.randomPassword(8);
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        emailService.sendEmailPassword(email, newPassword);
+    }
 }

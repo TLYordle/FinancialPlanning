@@ -1,9 +1,6 @@
 package com.group_2.FinancialPlanning.controller;
 
-import com.group_2.FinancialPlanning.dto.request.AuthenticationRequest;
-import com.group_2.FinancialPlanning.dto.request.IntrospectRequest;
-import com.group_2.FinancialPlanning.dto.request.LogoutRequest;
-import com.group_2.FinancialPlanning.dto.request.RefreshRequest;
+import com.group_2.FinancialPlanning.dto.request.*;
 import com.group_2.FinancialPlanning.dto.response.ApiResponse;
 import com.group_2.FinancialPlanning.dto.response.AuthenticationResponse;
 import com.group_2.FinancialPlanning.dto.response.IntrospectResponse;
@@ -57,8 +54,11 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
-//    @PostMapping("/forgot-password")
-//    ApiResponse<String> forgotPassword(@RequestBody String email){
-//        authenticationService.forgotPassword(email);
-//    }
+    @PostMapping("/forgot-password")
+    ApiResponse<String> forgotPassword(@RequestBody ForgotPasswordRequest request){
+        authenticationService.forgotPassword(request);
+        return ApiResponse.<String>builder()
+                .message("Success to send new password to " + request.getEmail())
+                .build();
+    }
 }
