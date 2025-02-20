@@ -19,6 +19,7 @@ public class UserResponse {
     private String full_name;
     private String email;
     private Set<Role> roles;
+    private boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

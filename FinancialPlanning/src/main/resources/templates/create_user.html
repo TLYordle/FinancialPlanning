@@ -38,7 +38,7 @@
     <div class="flex items-center">
         <div class="text-right mr-2">
             <span id = "full_name" class="block">tranglth</span>
-            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+            <span id = "role" class="text-sm text-gray-600">Accounting depart</span>
         </div>
         <i class="fas fa-user ml-2"></i>
         <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
@@ -55,16 +55,12 @@
 </div>
     <div class="container mt-4">
         <div class="card">
-            <h5>Create User</h5>
+            <h5 class="text-xl font-semibold mb-4">Create User</h5>
             <form id="createUserForm">
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Username*</label>
                         <input type="text" id="username" class="form-control" required>
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Full Name*</label>
-                        <input type="text" id="fullName" class="form-control" required>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -72,68 +68,12 @@
                         <label class="form-label">Email*</label>
                         <input type="email" id="email" class="form-control" required>
                     </div>
-                    <div class="col">
-                        <label class="form-label">Phone Number*</label>
-                        <input type="text" id="phoneNumber" class="form-control" required>
-                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <label class="form-label">DOB*</label>
-                        <input type="date" id="dob" class="form-control" required>
+                        <label class="form-label">Password*</label>
+                        <input type="password" id="password" class="form-control" required>
                     </div>
-                    <div class="col">
-                        <label class="form-label">Address</label>
-                        <input type="text" id="address" class="form-control">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label class="form-label">Department*</label>
-                        <select id="department" class="form-select" required>
-                            <option value="">Select</option>
-                            <option value="IT">IT</option>
-                            <option value="HR">HR</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Communication">Communication</option>
-                            <option value="Marketing">Marketing</option>
-                            <option value="Accounting">Accounting</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Position*</label>
-                        <select id="position" class="form-select" required>
-                            <option value="">Select</option>
-                            <option value="Financial_Executive">Financial Executive</option>
-                            <option value="Project_manager">Project Manager</option>
-                            <option value="Office_Assistant">Office Assistant</option>
-                            <option value="Senior_Executive">Senior Executive</option>
-                            <option value="Accounting_Executive">Accounting Executive</option>
-                            <option value="Junior_Executive">Junior Executive</option>
-                            <option value="Intern">Intern</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label class="form-label">Role*</label>
-                        <select class="form-select" id="role" required>
-                            <option value="" disabled selected>Select Role</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Financial_Staff">Financial Staff</option>
-                            <option value="Accountant">Accountant</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="form-label">Status</label>
-                        <input type="text" id="status" value="Active" disabled required>
-                    </div>
-                    
-                    
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Notes</label>
-                    <textarea id="note" class="form-control"></textarea>
                 </div>
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary">Submit</button>

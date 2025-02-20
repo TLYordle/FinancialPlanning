@@ -3,6 +3,7 @@ package com.group_2.FinancialPlanning.service;
 import com.group_2.FinancialPlanning.constant.PredefinedRole;
 import com.group_2.FinancialPlanning.dto.request.UserCreationRequest;
 import com.group_2.FinancialPlanning.dto.request.UserUpdatingRequest;
+import com.group_2.FinancialPlanning.dto.response.ApiResponse;
 import com.group_2.FinancialPlanning.dto.response.UserResponse;
 import com.group_2.FinancialPlanning.entity.Role;
 import com.group_2.FinancialPlanning.entity.User;
@@ -40,7 +41,7 @@ public class UserService {
 
     RoleRepository roleRepository;
 
-    @PreAuthorize("hasRole('ADMIN')") // Cai nay vi du cho viec set Role cho tung chuc nang
+//    @PreAuthorize("hasRole('ADMIN')") // Cai nay vi du cho viec set Role cho tung chuc nang
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
 
@@ -51,7 +52,7 @@ public class UserService {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse createUser(UserCreationRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
@@ -59,6 +60,7 @@ public class UserService {
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
+        user.setActive(true);
 
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(PredefinedRole.STAFF_ROLE).ifPresent(roles::add);
@@ -76,7 +78,15 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getActiveUsers() {
+        return userRepository.findAll().stream()
+                .filter(User::isActive) // Lọc user có isActive = true
+                .map(userMapper::toUserResponse)
+                .toList();
+    }
+
+
+    //    @PreAuthorize("hasRole('ADMIN')")
     public UserResponse editUser(String id, UserUpdatingRequest request){
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userMapper.toUpdateUser(request, user);
@@ -94,7 +104,7 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(String id){
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         user.setActive(false);
