@@ -60,8 +60,6 @@ function showEditForm(userId, fullName, role) {
     document.getElementById("editUserId").value = userId;
     document.getElementById("editFullName").value = fullName;
     document.getElementById("editRole").value = role;
-    document.getElementById("editPassword").value = ""; // Reset password khi mở modal
-
     document.getElementById("editUserModal").classList.remove("hidden");
 }
 
@@ -105,7 +103,6 @@ document.getElementById("editUserForm").addEventListener("submit", async functio
 
     const userId = document.getElementById("editUserId").value;
     const fullName = document.getElementById("editFullName").value;
-    const password = document.getElementById("editPassword").value;
     const role = document.getElementById("editRole").value;
 
     try {
@@ -116,7 +113,6 @@ document.getElementById("editUserForm").addEventListener("submit", async functio
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                password: password,
                 full_name: fullName,
                 roles: [role],
             }),

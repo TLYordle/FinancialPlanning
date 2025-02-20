@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserUpdatingRequest {
-    private String password;
     private String full_name;
     List<String> roles;
 }

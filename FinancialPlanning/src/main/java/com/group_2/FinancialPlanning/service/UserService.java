@@ -91,7 +91,6 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userMapper.toUpdateUser(request, user);
         user.setUpdatedAt(LocalDateTime.now());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFull_name(request.getFull_name());
 
         Set<Role> newRoles = request.getRoles().stream()

@@ -88,6 +88,11 @@
     <script src="js/create_user.js"></script>
     <script src="js/header.js"></script>
     <script>
+        document.getElementById("cancelBtn").addEventListener("click", function () {
+            window.location.href = "list_user.html"; // Điều hướng đến trang list_user.html
+        });
+    </script>
+    <script>
         var fullName = localStorage.getItem("full_name")
         var role = localStorage.getItem("role")
         var span = document.getElementById("full_name")
