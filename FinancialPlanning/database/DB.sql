@@ -3,11 +3,11 @@ USE financial_planning;
 
 -- Bảng users
 CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) ,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user', 'manager') NOT NULL,
+    role ENUM('admin', 'staff', 'accountant') NOT NULL,
     is_active TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -102,9 +102,10 @@ CREATE TABLE plan_versions (
 -- Bảng user_sessions
 CREATE TABLE user_sessions (
     session_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    user_id VARCHAR(255),
     login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     logout_time TIMESTAMP NULL,
     session_token VARCHAR(255) UNIQUE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
