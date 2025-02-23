@@ -1,0 +1,45 @@
+package com.group_2.FinancialPlanning.service;
+
+import com.group_2.FinancialPlanning.dto.request.RoleRequest;
+import com.group_2.FinancialPlanning.dto.response.RoleResponse;
+import com.group_2.FinancialPlanning.mapper.RoleMapper;
+import com.group_2.FinancialPlanning.repository.PermissionRepository;
+import com.group_2.FinancialPlanning.repository.RoleRepository;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+
+@Service
+@Slf4j
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class RoleService {
+
+    RoleRepository roleRepository;
+    PermissionRepository permissionRepository;
+    RoleMapper roleMapper;
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public RoleResponse create(RoleRequest request){
+        var role = roleMapper.toRole(request);
+        var permissions =  permissionRepository.findAllById(request.getPermissions());
+        role.setPermissions(new HashSet<>(permissions));
+
+        role = roleRepository.save(role);
+        return roleMapper.toRoleResponse(role);
+    }
+
+    public List<RoleResponse> getAll(){
+        return roleRepository.findAll().stream().map(roleMapper::toRoleResponse).toList();
+    }
+
+    public void delete(String role){
+        roleRepository.deleteById(role);
+    }
+}
