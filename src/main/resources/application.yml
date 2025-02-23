@@ -8,7 +8,7 @@ spring:
     url: "jdbc:mysql://localhost:3306/financial_planning"
     driverClassName: "com.mysql.cj.jdbc.Driver"
     username: root
-    password: 123456
+    password: vohieu123
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +16,12 @@ spring:
   jmx:
     enabled: true
     default-domain: myapp
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+
 
 jwt:
   signerKey: "ex6YyC9slbzxkFKTm59P4FzV6XpkT0/vCnqHsOHMUa+sltd/OZ1xYYTY3CnCvAwm"
