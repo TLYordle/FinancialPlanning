@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4738e1c2-2e6f-4ba1-a3ce-1c23cab4d7ea" name="Changes" comment="23/02/2025 fix Database">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/controller/FinancialPlanController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/controller/FinancialPlanDetailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/FinancialPlan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/FinancialPlanDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/repository/FinancialPlanDetailRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/repository/FinancialPlanRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/FinancialPlanDetailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/FinancialPlanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/configuration/ApplicationInitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/configuration/ApplicationInitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/FinancialPlanDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/FinancialPlans.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/PlanStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/PlanVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/PlanVersion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/group_2/FinancialPlanning/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TLYordle&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/TLYordle/FinancialPlanning.git&quot;,
+    &quot;accountId&quot;: &quot;5804104f-02dc-4fd9-898b-4f39c1e87a91&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2tAhVD5A4qokwP5d7nmGTsAieV6" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.FinancialPlanList.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.login.html.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FinancialPlanning [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FinancialPlanning [compile].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.FinancialPlanningApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/HocTap/TTDN/CODE/FinancialPlanning - Copy&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\HocTap\TTDN\CODE\FinancialPlanning\src\main\resources\templates" />
+      <recent name="D:\HocTap\TTDN\CODE\FinancialPlanning\FinancialPlanning\src\main\resources\templates" />
+      <recent name="D:\HocTap\TTDN\CODE\FinancialPlanning\FinancialPlanning\src\main\resources" />
+      <recent name="D:\HocTap\TTDN\CODE\FinancialPlanning\FinancialPlanning\src\main\java\com\group_2\FinancialPlanning\service" />
+      <recent name="D:\HocTap\TTDN\CODE\FinancialPlanning\FinancialPlanning\src\main\java\com\group_2\FinancialPlanning\repository" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FinancialPlanningApplication">
+    <configuration name="FinancialPlanList.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/FinancialPlanning/templates/FinancialPlanList.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/FinancialPlanning/templates/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="login.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/FinancialPlanning/templates/login.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="FinancialPlanningApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="FinancialPlanning (1)" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.group_2.FinancialPlanning.FinancialPlanningApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FinancialPlanningApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="FinancialPlanning (1)" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.group_2.FinancialPlanning.FinancialPlanningApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.FinancialPlanList.html" />
+        <item itemvalue="JavaScript Debug.login.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4738e1c2-2e6f-4ba1-a3ce-1c23cab4d7ea" name="Changes" comment="" />
+      <created>1739800809030</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739800809030</updated>
+      <workItem from="1739800811593" duration="8535000" />
+      <workItem from="1739888656399" duration="376000" />
+      <workItem from="1739889922613" duration="1527000" />
+      <workItem from="1739895501522" duration="430000" />
+      <workItem from="1739896007059" duration="2342000" />
+      <workItem from="1739921760966" duration="2088000" />
+      <workItem from="1739974298783" duration="5548000" />
+      <workItem from="1740018777405" duration="3915000" />
+      <workItem from="1740058490800" duration="5929000" />
+      <workItem from="1740148392875" duration="1033000" />
+      <workItem from="1740250629833" duration="3590000" />
+      <workItem from="1740269559029" duration="1570000" />
+      <workItem from="1740274524303" duration="1138000" />
+      <workItem from="1740277893062" duration="5117000" />
+      <workItem from="1740283155830" duration="10757000" />
+      <workItem from="1740324864430" duration="2283000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="23/02/2025 fix Database" />
+    <option name="LAST_COMMIT_MESSAGE" value="23/02/2025 fix Database" />
+  </component>
+</project>

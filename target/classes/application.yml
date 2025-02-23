@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/financial_planning"
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    username: root
+    password: 123456
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+
+  jmx:
+    enabled: true
+    default-domain: myapp
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+
+
+jwt:
+  signerKey: "ex6YyC9slbzxkFKTm59P4FzV6XpkT0/vCnqHsOHMUa+sltd/OZ1xYYTY3CnCvAwm"
+  valid-duration: 86400 # in second
+  refreshable-duration: 864000
