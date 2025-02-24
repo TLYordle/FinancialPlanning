@@ -21,13 +21,13 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    
+
     public User createUser(User user) {
-        user.setPassword(creatPassword());
+        user.setPassword(createPassword());
         return userRepository.save(user);
     }
 
-    private String creatPassword(){
+    private String createPassword(){
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         
@@ -43,7 +43,7 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
         return user.isPresent() && user.get().getPassword().equals(password);
     }
-    
+
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -60,7 +60,7 @@ public class UserService {
             return true;
         }
         return false;
-    }    
+    }
 
     public User updateUser(Long id, User updatedUser) {
         Optional<User> existingUserOpt = userRepository.findById(id);
@@ -68,17 +68,15 @@ public class UserService {
         if (existingUserOpt.isPresent()) {
             User existingUser = existingUserOpt.get();
 
-            existingUser.setUserName(updatedUser.getUserName());
             existingUser.setFullName(updatedUser.getFullName());
             existingUser.setEmail(updatedUser.getEmail());
             existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
-            existingUser.setDob(updatedUser.getDob());
+            existingUser.setBirthday(updatedUser.getBirthday());
             existingUser.setAddress(updatedUser.getAddress());
             existingUser.setDepartment(updatedUser.getDepartment());
             existingUser.setPosition(updatedUser.getPosition());
             existingUser.setRole(updatedUser.getRole());
-            existingUser.setStatus(updatedUser.getStatus());
-            existingUser.setNote(updatedUser.getNote());
+            existingUser.setIsActive(updatedUser.getIsActive());
 
             return userRepository.save(existingUser);
         } else {
