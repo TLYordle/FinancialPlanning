@@ -57,29 +57,24 @@
 
         </tbody>
     </table>
-    <!-- Modal Chỉnh Sửa User -->
-    <div id="editUserModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 class="text-xl font-semibold mb-4">Edit User</h2>
-            <form id="editUserForm">
-                <input type="hidden" id="editUserId">
-                <div class="mb-3">
-                    <label class="block text-sm font-medium">Full Name</label>
-                    <input type="text" id="editFullName" class="w-full p-2 border rounded" required>
-                </div>
-                <div class="mb-3">
-                    <label class="block text-sm font-medium">Role</label>
-                    <select id="editRole" class="w-full p-2 border rounded" required>
-                        <option value="ADMIN">ADMIN</option>
-                        <option value="STAFF">STAFF</option>
-                        <option value="USER">ACCOUNTANT</option>
-                    </select>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded mr-2" onclick="closeEditModal()">Cancel</button>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-                </div>
-            </form>
+
+    <div id="userDetailModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-xl font-semibold mb-4">Thông tin chi tiết User</h2>
+            <input type="hidden" id="detailUserId">
+            <p><strong>Full name:</strong> <span id="detailFullName"></span></p>
+            <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+            <p><strong>Phone number:</strong> <span id="detailPhoneNumber"></span></p>
+            <p><strong>Address:</strong> <span id="detailAddress"></span></p>
+            <p><strong>DOB:</strong> <span id="detailBirthday"></span></p>
+            <p><strong>Department:</strong> <span id="detailDepartment"></span></p>
+            <p><strong>Position:</strong> <span id="detailPosition"></span></p>
+            <p><strong>Role:</strong> <span id="detailRole"></span></p>
+            <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+            <div>
+                <button onclick="closeUserDetailModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Close</button>
+                <button onclick="ToEditUser()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Edit</button>
+            </div>
         </div>
     </div>
 
@@ -88,6 +83,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/listuser.js"></script>
+    <script src="js/edit_user.js"></script>
     <script src="js/logout.js"></script>
     <script>
         var fullName = localStorage.getItem("full_name")
