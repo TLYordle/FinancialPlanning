@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Financial Plan System - Preview Report</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    .custom-field {
+      @apply border border-gray-300 rounded-md p-2 bg-gray-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md;
+    }
+    .custom-button {
+      @apply bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200 shadow-md;
+    }
+    .custom-link {
+      @apply text-blue-600 hover:text-blue-800 underline;
+    }
+    .table-header {
+      @apply bg-gray-200 text-gray-800 font-semibold;
+    }
+    .table-row {
+      @apply border-b border-gray-300;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+  <div class="flex items-center">
+    <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+  </div>
+  <div class="flex items-center">
+    <div class="text-right mr-2">
+      <span class="block" id="full_name">tranglth</span>
+      <span class="text-sm text-gray-600" id="role">Accounting depart</span>
+    </div>
+    <i class="fas fa-user ml-2"></i>
+    <button class="bg-gray-500 text-white p-2 ml-4" onclick="logout()">Logout</button>
+  </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+  <nav class="flex space-x-4">
+    <a class="text-black" href="home_admin.html">Home</a>
+    <a class="text-black" href="#">Financial plan</a>
+    <a class="text-black font-bold" href="#">Financial Report</a>
+    <a class="text-black" href="#">Term Management</a>
+    <a class="text-black" href="list_user.html">User Management</a>
+  </nav>
+</div>
+<!-- Main Content -->
+<div class="bg-gray-100 flex justify-center min-h-screen">
+  <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-7xl mt-6">
+    <div class="mb-4">
+      <h2 class="text-2xl font-semibold">Monthly Report</h2>
+      <p class="text-blue-500">
+        <a href="monthly_report_staff.html" class="custom-link underline">Report List</a> > Import Report
+      </p>
+    </div>
+    <div class="max-w-7xl mx-auto mt-1 bg-gray-50 p-6 rounded shadow-md">
+      <h3 class="text-lg font-medium mb-4">Step 2/2: Please preview the report details before submitting</h3>
+      <div class="space-y-4">
+        <div class="flex justify-stretch">
+          <div class="flex items-center space-x-2">
+            <p class="text-gray-700 text-base font-medium">Term:</p>
+            <p id="termValue" class="text-gray-800 text-base">Q3-2022</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <p class="text-gray-700 text-base font-medium">Department:</p>
+            <p id="departmentValue" class="text-gray-800 text-base">Marketing</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <p class="text-gray-700 text-base font-medium">Month:</p>
+          <p id="monthValue" class="text-gray-800 text-base">November</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <p class="text-gray-700 text-base font-medium">File:</p>
+          <p id="fileValue" class="text-gray-800 text-base"></p>
+        </div>
+      </div>
+
+
+      <!-- Bảng hiển thị dữ liệu từ file -->
+      <div class="overflow-auto max-h-96 border rounded-md mt-4">
+        <table class="w-full border-collapse text-center bg-gray-100">
+          <thead id="tableHead" class="table-header"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="mt-6 flex justify-between">
+        <button type="button" class="custom-button bg-blue-500 rounded p-2 text-white back-btn" onclick="goBack()">Back</button>
+        <button type="submit" class="custom-button bg-blue-500 rounded p-2 text-white submit-btn" onclick="submitReport()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function logout() {
+    alert("Logged out successfully!");
+  }
+  function goBack() {
+    window.location.href = 'import_report.html';
+  }
+  function submitReport() {
+    alert("Report submitted successfully!");
+  }
+  const backButton = document.querySelector('.back-btn');
+    if (backButton) {
+    backButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Ngăn form submit mặc định
+        window.location.href = 'import_report.html';
+        });
+    }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const fileName = localStorage.getItem('importedFileName');
+    if (fileName) document.getElementById('fileValue').textContent = fileName;
+
+    const fileData = localStorage.getItem('excelData');
+    if (fileData) {
+      const jsonData = JSON.parse(fileData);
+      renderTable(jsonData);
+    }
+  });
+
+  function renderTable(data) {
+    const tableHead = document.getElementById("tableHead");
+    const tableBody = document.getElementById("tableBody");
+
+    if (!data || data.length === 0) {
+        tableHead.innerHTML = '';
+        tableBody.innerHTML = '<tr><td colspan="9" class="p-2 text-gray-500">Không có dữ liệu trong file.</td></tr>';
+        return;
+    }
+
+    // Tạo tiêu đề bảng
+    const headers = Object.keys(data[0]);
+    tableHead.innerHTML = "<tr>" + headers.map(col => `<th class="p-2 border bg-gray-300">${col}</th>`).join("") + "</tr>";
+
+    // Tạo nội dung bảng, thay undefined hoặc trống bằng "NULL"
+    tableBody.innerHTML = data.map(row =>
+        `<tr class="table-row">` +
+        headers.map(col => `<td class="p-2 border">${row[col] === undefined || row[col] === '' ? 'NULL' : row[col]}</td>`).join("") +
+        `</tr>`
+    ).join("");
+    tableBody.innerHTML = data.map(row =>
+        `<tr class="table-row">` +
+        headers.map((col, index) => {
+            let value = row[col] === undefined || row[col] === '' ? 'NULL' : row[col];
+            // Định dạng số cho cột 3 và cột 5
+            if ((index === 2 || index === 4) && value !== 'NULL') {
+                value = Number(value).toLocaleString('en-US'); // Thêm dấu phẩy
+            }
+            return `<td class="p-2 border">${value}</td>`;
+        }).join("") +
+        `</tr>`
+    ).join("");
+}
+</script>
+</body>
+</html>
