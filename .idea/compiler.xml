@@ -12,12 +12,10 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
         </processorPath>
+        <module name="FinancialPlanning" />
         <module name="FinancialPlanning (1)" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="FinancialPlanning" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

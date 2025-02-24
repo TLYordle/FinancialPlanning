@@ -9,13 +9,14 @@ spring:
     driverClassName: "com.mysql.cj.jdbc.Driver"
     username: root
     password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
   jmx:
     enabled: true
     default-domain: myapp
+
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
