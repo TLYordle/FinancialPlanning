@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body { background-color: #f5f5f5; }
+    .navbar { background-color: #adb5bd; }
+    .card { margin: 20px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+  </style>
+  <style>
+    /* Chỉnh sửa để đảm bảo các phần tử trong row thẳng hàng */
+    .row.mb-3 {
+        display: flex;
+        align-items: center; /* Căn chỉnh tất cả các phần tử trong row theo chiều dọc */
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        margin-bottom: 0.5rem; /* Đảm bảo khoảng cách giữa text và input/select */
+    }
+  </style>
+</head>
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+  <div class="flex items-center">
+    <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+  </div>
+  <div class="flex items-center">
+    <div class="text-right mr-2">
+      <span id = "full_name" class="block">tranglth</span>
+      <span id = "role" class="text-sm text-gray-600">Accounting depart</span>
+    </div>
+    <i class="fas fa-user ml-2"></i>
+    <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+  </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+  <nav class="flex space-x-4">
+    <a class="text-black" href="home_admin.html">Home</a>
+    <a class="text-black" href="#">Financial plan</a>
+    <a class="text-black" href="#">Financial Report</a>
+    <a class="text-black" href="#">Term Management</a>
+    <a class="text-black font-bold" href="list_user.html">User Management</a>
+  </nav>
+</div>
+<div class="container mt-4">
+  <div class="card">
+    <h5 class="text-xl font-semibold mb-4">Edit User</h5>
+    <form id="editUserForm">
+      <input type="hidden" id="editUserId">
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Full Name*</label>
+          <input type="text" id="editFullName" class="form-control" required>
+        </div>
+        <div class="col">
+          <label class="form-label">Email*</label>
+          <input type="email" id="editEmail" class="form-control" required>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Phone Number*</label>
+          <input type="text" id="editPhoneNumber" class="form-control" required>
+        </div>
+        <div class="col">
+          <label class="form-label">Address*</label>
+          <input type="text" id="editAddress" class="form-control" required>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">DOB*</label>
+          <input type="date" id="editDOB" class="form-control" required>
+        </div>
+        <div class="col">
+          <label class="form-label">Department*</label>
+          <select id="editDepartment" class="form-control">
+            <option>IT</option>
+            <option>HR</option>
+            <option>Finance </option>
+            <option>Communication</option>
+            <option>Marketing</option>
+            <option>Accounting</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Role*</label>
+          <select id="editRole" class="form-control">
+            <option>ADMIN</option>
+            <option>STAFF</option>
+            <option>ACCOUNTANT </option>
+          </select>
+        </div>
+        <div class="col">
+          <label class="form-label">Position*</label>
+          <select id="editPosition" class="form-control">
+            <option>Financial Executive</option>
+            <option>Project manager</option>
+            <option>Office Assistant </option>
+            <option>Senior Executive</option>
+            <option>Accounting Executive</option>
+            <option>Junior Executive</option>
+            <option>Intern</option>
+          </select>
+        </div>
+      </div>
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/listuser.js"></script>
+<script src="js/edit_user.js"></script>
+<script src="js/header.js"></script>
+<script>
+  document.getElementById("cancelBtn").addEventListener("click", function () {
+      window.location.href = "list_user.html"; // Điều hướng đến trang list_user.html
+  });
+</script>
+<script>
+  var fullName = localStorage.getItem("full_name")
+  var role = localStorage.getItem("role")
+  var span = document.getElementById("full_name")
+  var spanRole = document.getElementById("role")
+  span.textContent = fullName
+  spanRole.textContent = role
+</script>
+</body>
+</html>

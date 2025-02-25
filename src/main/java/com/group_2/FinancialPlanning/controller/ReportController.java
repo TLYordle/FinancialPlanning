@@ -1,7 +1,6 @@
 package com.group_2.FinancialPlanning.controller;
 
 import com.group_2.FinancialPlanning.service.ReportService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,7 @@ public class ReportController {
         this.reportService = reportService;
     }
 
-    @PostMapping("/report")
+    @PostMapping("/import-report")
     public ResponseEntity<String> importReport(@RequestParam("file") MultipartFile file,
                                                @RequestParam("term") String term,
                                                @RequestParam("month") String month) {
@@ -43,5 +42,4 @@ public class ReportController {
             return ResponseEntity.badRequest().body("Error importing file: " + e.getMessage());
         }
     }
-
 }

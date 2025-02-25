@@ -43,54 +43,6 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginRequest) {
-        String email = loginRequest.get("email");
-        String password = loginRequest.get("password");
-
-        Map<String, Object> response = new HashMap<>();
-        Map<String, String> errors = new HashMap<>();
-
-        // Kiểm tra nếu email bị bỏ trống
-        if (email == null || email.trim().isEmpty()) {
-            errors.put("email", "This field is required");
-        } else {
-            // Kiểm tra định dạng email
-            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-            if (!email.matches(emailRegex)) {
-                errors.put("email", "Please enter a valid email address");
-            }
-        }
-
-        // Kiểm tra nếu password bị bỏ trống
-        if (password == null || password.trim().isEmpty()) {
-            errors.put("password", "This field is required");
-        }
-
-        // Nếu có lỗi thì trả về luôn
-        if (!errors.isEmpty()) {
-            response.put("success", false);
-            response.put("errors", errors);
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        Optional<User> userOptional = userService.getUserByEmail(email);
-
-        // Kiểm tra thông tin đăng nhập
-        if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
-            User user = userOptional.get();
-            response.put("success", true);
-            response.put("email", user.getEmail());
-            response.put("role", user.getRole().toString());
-            response.put("userID", user.getUser_id().toString());
-            return ResponseEntity.ok(response);
-        } else {
-            errors.put("password", "Either email address or password is incorrect. Please try again");
-            response.put("success", false);
-            response.put("errors", errors);
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<User>> getUserById(@PathVariable("id") Long id) {
