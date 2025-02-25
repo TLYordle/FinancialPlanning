@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   fetchUserData();
 });
+let allUsers = []; // Lưu danh sách user lấy từ API
 function fetchUserData() {
   fetch("http://localhost:8080/api/users", {
     method: "GET",
@@ -13,9 +14,11 @@ function fetchUserData() {
       console.log("Dữ liệu API trả về:", data);
 
       if (Array.isArray(data)) {
-      } else {
-        console.error("Lỗi lấy dữ liệu: Dữ liệu API không đúng định dạng");
-      }
+        allUsers = data;  // Lưu dữ liệu vào biến toàn cục
+        displayUsers(allUsers); // Hiển thị danh sách ban đầu
+        } else {
+            console.error("Lỗi lấy dữ liệu: Dữ liệu API không đúng định dạng");
+        }
     })
     .catch((error) => console.error("Lỗi kết nối API:", error));
 }
@@ -28,6 +31,13 @@ function displayUsers(users) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
+      <td class="py-2 px-4 border-b text-center">${index + 1}</td>
+      <td class="py-2 px-4 border-b text-center">${user.fullName || "N/A"}</td>
+      <td class="py-2 px-4 border-b text-center">${user.email}</td>
+      <td class="py-2 px-4 border-b text-center">${user.department}</td>
+      <td class="py-2 px-4 border-b text-center">${user.position}</td>
+      <td class="py-2 px-4 border-b text-center">
+        <button class="text-blue-500 ml-2" onclick="ToEditUser('${user.user_id}')">
             <i class="fas fa-eye"></i>
         </button>
         <button class="text-yellow-500 ml-2" onclick="redirectToEditUser('${user.user_id}')">
@@ -43,11 +53,27 @@ function displayUsers(users) {
   });
 }
 
+
+function applyFilters() {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const selectedRole = document.getElementById("roleFilter").value;
+
+    const filteredUsers = allUsers.filter(user => {
+        const matchesName = user.fullName.toLowerCase().includes(searchValue);
+        const matchesRole = selectedRole === "" || user.role === selectedRole;
+        return matchesName && matchesRole;
+    });
+
+    displayUsers(filteredUsers);
+}
+
 function redirectToEditUser(userId) {
     // Điều hướng sang trang edit_user.html với user_id trên URL
     window.location.href = `edit_user.html?user_id=${userId}`;
 }
 
+function ToEditUser(userId) {
+    window.location.href = `user_details.html?user_id=${userId}`;
 }
 
 
@@ -77,4 +103,3 @@ async function deleteUser(userId) {
     alert("Lỗi khi xóa user!");
   }
 }
-
