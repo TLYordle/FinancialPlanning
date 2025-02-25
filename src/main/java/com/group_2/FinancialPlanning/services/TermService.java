@@ -21,8 +21,8 @@ public class TermService {
         return termRepository.findById(id);
     }
 
-    public Term getTermsByTermName(String termName) {
-        return termRepository.findByTermName(termName);
+    public Term findByTermNameAndStatus(String termName, Term.Status status) {
+        return termRepository.findByTermNameAndStatus(termName, status);
     }
 
     public List<Term> getTermsByStatus(Term.Status status) {

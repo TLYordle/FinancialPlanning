@@ -10,7 +10,7 @@ import java.util.List;
 public interface TermsRepository extends JpaRepository<Term, Integer> {
 
     // Tìm term theo tên
-    Term findByTermName(String termName);
+    Term findByTermNameAndStatus(String termName, Term.Status status);
 
     // Tìm term theo status (nếu cần)
     List<Term> findByStatus(Term.Status status);

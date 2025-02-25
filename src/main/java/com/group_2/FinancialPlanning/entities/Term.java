@@ -1,5 +1,7 @@
 package com.group_2.FinancialPlanning.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.group_2.FinancialPlanning.services.UserService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,8 +29,8 @@ public class Term {
     @Enumerated(EnumType.STRING)
     private Duration duration;
 
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
@@ -43,8 +45,9 @@ public class Term {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "created_by")
-    private Integer createdBy;
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 
     // Enum cho duration
     public enum Duration {
@@ -53,11 +56,11 @@ public class Term {
 
     // Enum cho status
     public enum Status {
-            NEW, INPROGESS, CLOSED
+            NEW, INPROGRESS, CLOSED
     }
 
     // Constructors
     public Term() {
-        this.startDate = LocalDateTime.now(); // Mặc định current timestamp
+        this.startDate = LocalDate.now(); // Mặc định current timestamp
     }
 }

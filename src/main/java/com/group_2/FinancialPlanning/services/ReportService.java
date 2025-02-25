@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -32,14 +29,16 @@ public class ReportService {
     private final MonthlyReportRepository monthlyReportRepository;
     private final MonthlyReportDetailsRepository monthlyReportDetailsRepository;
     private final TermsRepository termsRepository;
+    private final UserService userService;
 
     @Autowired
     public ReportService(MonthlyReportRepository monthlyReportRepository,
                          MonthlyReportDetailsRepository monthlyReportDetailsRepository,
-                         TermsRepository termsRepository) {
+                         TermsRepository termsRepository, UserService userService) {
         this.monthlyReportRepository = monthlyReportRepository;
         this.monthlyReportDetailsRepository = monthlyReportDetailsRepository;
         this.termsRepository = termsRepository;
+        this.userService = userService;
     }
 
     public void processExcelFile(MultipartFile file, String term, String month) throws IOException {
@@ -77,12 +76,12 @@ public class ReportService {
     @Transactional
     public void saveReportToDatabase(String term, String month, List<MonthlyReportDetails> details, User user) {
         try {
-            Term termEntity = termsRepository.findByTermName(term);
+            Term termEntity = termsRepository.findByTermNameAndStatus(term, Term.Status.NEW);
             if (termEntity == null) {
                 termEntity = new Term();
                 termEntity.setTermName(term);
                 termEntity.setDuration(Term.Duration.valueOf("MONTHLY"));
-                termEntity.setCreatedBy(user.getUser_id());
+                termEntity.setCreatedBy(userService.getUserById(Long.valueOf(user.getUser_id())).orElse(null));
                 termsRepository.save(termEntity);
             }
 
