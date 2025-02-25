@@ -3,6 +3,8 @@ package com.group_2.FinancialPlanning.services;
 import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -18,6 +20,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    EmailService emailService;
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -27,7 +32,12 @@ public class UserService {
             throw new RuntimeException("Email already exists");
         }
         user.setPassword(createPassword());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+
+        emailService.sendAccount(savedUser.getEmail(),savedUser.getFullName(),savedUser.getPassword());
+
+        return savedUser;
     }
 
     private String createPassword(){
@@ -35,16 +45,10 @@ public class UserService {
         StringBuilder sb = new StringBuilder();
         
         for (int i = 0; i < 10; i++) {
-            // Sinh số ngẫu nhiên từ 0 đến 9
             int digit = random.nextInt(10);
             sb.append(digit);
         }
         return sb.toString();
-    }
-
-    public boolean login(String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent() && user.get().getPassword().equals(password);
     }
 
     public Optional<User> getUserByEmail(String email) {

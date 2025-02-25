@@ -110,3 +110,8 @@ CREATE TABLE annual_expense_reports_detail(
     user_id int,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+CREATE TABLE invalidated_token(
+    id varchar(255),
+    expiry_time DATETIME(6)
+)

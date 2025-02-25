@@ -8,11 +8,11 @@ spring:
     url: "jdbc:mysql://localhost:3306/financial_planning"
     driverClassName: "com.mysql.cj.jdbc.Driver"
     username: root
-    password: vohieu123
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    password: root
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
   jmx:
     enabled: true
     default-domain: myapp
