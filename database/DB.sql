@@ -12,7 +12,7 @@ CREATE TABLE users (
     phonenumber VARCHAR(255) DEFAULT '',
     position VARCHAR(255) DEFAULT '',
     department VARCHAR(255) DEFAULT '',
-    role ENUM('ADMIN', 'FINANCIAL STAFF', 'ACCOUNTANT') NOT NULL,
+    role ENUM('ADMIN', 'STAFF', 'ACCOUNTANT') NOT NULL,
     is_active TINYINT(1) DEFAULT 1,
     created_at datetime default CURRENT_TIMESTAMP,
     updated_at datetime default CURRENT_TIMESTAMP
