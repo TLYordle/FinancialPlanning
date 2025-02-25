@@ -22,12 +22,12 @@ CREATE TABLE users (
 CREATE TABLE terms (
     term_id INT AUTO_INCREMENT PRIMARY KEY,
     term_name VARCHAR(255) NOT NULL,
-    duration ENUM('MONTHLY', 'QUARTERLY', 'YEARLY') NOT NULL,
+    duration ENUM('MONTHLY', 'QUARTERLY', 'HALFYEAR') NOT NULL,
     start_date datetime default CURRENT_TIMESTAMP,
     end_date DATE NOT NULL,
     plan_due_date DATE NOT NULL,
     report_due_date DATE NOT NULL,
-    status ENUM('NEW', 'IN-PROGESS', 'CLOSED') DEFAULT 'NEW',
+    status ENUM('NEW', 'INPROGESS', 'CLOSED') DEFAULT 'NEW',
     created_by INT,
     FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
@@ -40,7 +40,7 @@ CREATE TABLE financial_plans (
     term_id INT,
     uploaded_by INT,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('NEW', 'WAITING FOR APPROVAL', 'APPROVED', 'CLOSED') NOT NULL,
+    status ENUM('NEW', 'WAITING FOR APPROVAL', 'APPROVED', 'CLOSED') DEFAULT 'NEW',
     version int DEFAULT 1,
     FOREIGN KEY (term_id) REFERENCES terms(term_id),
     FOREIGN KEY (uploaded_by) REFERENCES users(user_id)
