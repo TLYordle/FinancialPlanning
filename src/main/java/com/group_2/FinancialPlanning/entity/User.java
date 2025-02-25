@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Integer user_id;
 
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
@@ -52,11 +52,12 @@ public class User {
     private Integer isActive = 1; // 1 = Active, 0 = Inactive
 
 
+
     public enum Role {
         ADMIN, STAFF, ACCOUNTANT
     }
 
-    public Long getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
@@ -100,7 +101,7 @@ public class User {
         return isActive;
     }
 
-    public void setUser_id(Long user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 

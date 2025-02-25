@@ -1,6 +1,6 @@
+DROP DATABASE financial_planning;
 CREATE DATABASE financial_planning;
 USE financial_planning;
-
 -- Bảng users
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,9 +70,9 @@ CREATE TABLE monthly_report (
     term_id int,
     user_id int,
     status ENUM('NEW', 'CLOSED') NOT NULL,
+    report_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     version int DEFAULT 1,
-    report_date DATE DEFAULT CURRENT_TIMESTAMP,
-    foreign key (user_id) REFERENCES users(term_id),
+    foreign key (user_id) REFERENCES users(user_id),
     FOREIGN KEY (term_id) REFERENCES terms(term_id)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE monthly_report_details (
     project_name VARCHAR(255),
     note VARCHAR(6000),
     report_id int,
-    total_expense Long,
+    total_expense DECIMAL(20,2),
     total_user int,
     FOREIGN KEY (report_id) REFERENCES monthly_report(report_id)
 );
@@ -108,15 +108,5 @@ CREATE TABLE annual_expense_reports_detail(
 	aex_report_detail_id INT AUTO_INCREMENT PRIMARY KEY,
     cost_type VARCHAR(6000),
     user_id int,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
--- Bảng user_sessions
-CREATE TABLE user_sessions (
-    session_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(255),
-    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    logout_time TIMESTAMP NULL,
-    session_token VARCHAR(255) UNIQUE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
