@@ -2,6 +2,7 @@ package com.group_2.FinancialPlanning.entity;
 
 import jakarta.persistence.*;
 
+
 import java.sql.Date;
 
 @Entity

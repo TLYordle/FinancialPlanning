@@ -1,8 +1,8 @@
 package com.group_2.FinancialPlanning.service;
 
 import com.group_2.FinancialPlanning.entity.MonthlyReport;
-import com.group_2.FinancialPlanning.entity.MonthlyReportDetail;
-import com.group_2.FinancialPlanning.entity.Term;
+import com.group_2.FinancialPlanning.entity.MonthlyReportDetails;
+import com.group_2.FinancialPlanning.entity.Terms;
 import com.group_2.FinancialPlanning.entity.User;
 import com.group_2.FinancialPlanning.repository.MonthlyReportDetailsRepository;
 import com.group_2.FinancialPlanning.repository.MonthlyReportRepository;
@@ -28,7 +28,7 @@ import org.apache.poi.ss.usermodel.Row;
 @Service
 public class ReportService {
 
-    private final Map<String, List<MonthlyReportDetail>> temporaryReportData = new HashMap<>();
+    private final Map<String, List<MonthlyReportDetails>> temporaryReportData = new HashMap<>();
     private final MonthlyReportRepository monthlyReportRepository;
     private final MonthlyReportDetailsRepository monthlyReportDetailsRepository;
     private final TermsRepository termsRepository;
@@ -55,11 +55,11 @@ public class ReportService {
         try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
             XSSFSheet sheet = workbook.getSheetAt(0);
 
-            List<MonthlyReportDetail> reportDetails = new ArrayList<>();
+            List<MonthlyReportDetails> reportDetails = new ArrayList<>();
             for (Row row : sheet) {
                 if (row.getRowNum() == 0) continue; // Bỏ qua header
 
-                MonthlyReportDetail detail = new MonthlyReportDetail();
+                MonthlyReportDetails detail = new MonthlyReportDetails();
                 detail.setExpense(getCellValue(row.getCell(0)));
                 detail.setCostType(getCellValue(row.getCell(1)));
                 detail.setUnitPrice(parseBigDecimal(getCellValue(row.getCell(2))));
@@ -75,13 +75,13 @@ public class ReportService {
     }
 
     @Transactional
-    public void saveReportToDatabase(String term, String month, List<MonthlyReportDetail> details, User user) {
+    public void saveReportToDatabase(String term, String month, List<MonthlyReportDetails> details, User user) {
         try {
-            Term termEntity = termsRepository.findByTermName(term);
+            Terms termEntity = termsRepository.findByTermName(term);
             if (termEntity == null) {
-                termEntity = new Term();
+                termEntity = new Terms();
                 termEntity.setTermName(term);
-                termEntity.setDuration(Term.Duration.valueOf("MONTHLY"));
+                termEntity.setDuration(Terms.Duration.valueOf("MONTHLY"));
                 termEntity.setCreatedBy(user.getUser_id());
                 termsRepository.save(termEntity);
             }
@@ -94,7 +94,7 @@ public class ReportService {
             report.setStatus("NEW");
             monthlyReportRepository.save(report);
 
-            for (MonthlyReportDetail detail : details) {
+            for (MonthlyReportDetails detail : details) {
                 detail.setReportId(report.getReportId());
                 monthlyReportDetailsRepository.save(detail);
             }
@@ -139,7 +139,7 @@ public class ReportService {
         return 0;
     }
 
-    public List<MonthlyReportDetail> getTemporaryReportData(String month) {
+    public List<MonthlyReportDetails> getTemporaryReportData(String month) {
         return temporaryReportData.getOrDefault(month, new ArrayList<>());
     }
 

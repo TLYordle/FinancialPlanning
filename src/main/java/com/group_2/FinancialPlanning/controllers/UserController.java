@@ -1,16 +1,14 @@
-package com.group_2.FinancialPlanning.controller;
+package com.group_2.FinancialPlanning.controllers;
 
-import com.group_2.FinancialPlanning.entity.User;
-import com.group_2.FinancialPlanning.service.EmailService;
-import com.group_2.FinancialPlanning.service.UserService;
+import com.group_2.FinancialPlanning.entities.User;
+import com.group_2.FinancialPlanning.services.EmailService;
+import com.group_2.FinancialPlanning.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")

@@ -1,7 +1,7 @@
-package com.group_2.FinancialPlanning.service;
+package com.group_2.FinancialPlanning.services;
 
-import com.group_2.FinancialPlanning.entity.User;
-import com.group_2.FinancialPlanning.repository.UserRepository;
+import com.group_2.FinancialPlanning.entities.User;
+import com.group_2.FinancialPlanning.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

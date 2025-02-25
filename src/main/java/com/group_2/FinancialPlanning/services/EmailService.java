@@ -1,4 +1,4 @@
-package com.group_2.FinancialPlanning.service;
+package com.group_2.FinancialPlanning.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

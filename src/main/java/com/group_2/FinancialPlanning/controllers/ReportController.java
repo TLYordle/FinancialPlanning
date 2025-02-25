@@ -1,6 +1,6 @@
-package com.group_2.FinancialPlanning.controller;
+package com.group_2.FinancialPlanning.controllers;
 
-import com.group_2.FinancialPlanning.service.ReportService;
+import com.group_2.FinancialPlanning.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
