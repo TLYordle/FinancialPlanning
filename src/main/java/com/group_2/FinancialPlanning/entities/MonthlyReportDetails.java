@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "monthly_report_details")
-public class MonthlyReportDetail {
+public class MonthlyReportDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer monthlyReportDetailsId;

@@ -1,12 +1,12 @@
-package com.group_2.FinancialPlanning.service;
+package com.group_2.FinancialPlanning.services;
 
-import com.group_2.FinancialPlanning.entity.MonthlyReport;
-import com.group_2.FinancialPlanning.entity.MonthlyReportDetails;
-import com.group_2.FinancialPlanning.entity.Terms;
-import com.group_2.FinancialPlanning.entity.User;
-import com.group_2.FinancialPlanning.repository.MonthlyReportDetailsRepository;
-import com.group_2.FinancialPlanning.repository.MonthlyReportRepository;
-import com.group_2.FinancialPlanning.repository.TermsRepository;
+import com.group_2.FinancialPlanning.entities.MonthlyReport;
+import com.group_2.FinancialPlanning.entities.MonthlyReportDetails;
+import com.group_2.FinancialPlanning.entities.Term;
+import com.group_2.FinancialPlanning.entities.User;
+import com.group_2.FinancialPlanning.repositories.MonthlyReportDetailsRepository;
+import com.group_2.FinancialPlanning.repositories.MonthlyReportRepository;
+import com.group_2.FinancialPlanning.repositories.TermsRepository;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,11 +77,11 @@ public class ReportService {
     @Transactional
     public void saveReportToDatabase(String term, String month, List<MonthlyReportDetails> details, User user) {
         try {
-            Terms termEntity = termsRepository.findByTermName(term);
+            Term termEntity = termsRepository.findByTermName(term);
             if (termEntity == null) {
-                termEntity = new Terms();
+                termEntity = new Term();
                 termEntity.setTermName(term);
-                termEntity.setDuration(Terms.Duration.valueOf("MONTHLY"));
+                termEntity.setDuration(Term.Duration.valueOf("MONTHLY"));
                 termEntity.setCreatedBy(user.getUser_id());
                 termsRepository.save(termEntity);
             }

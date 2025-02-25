@@ -1,6 +1,6 @@
-package com.group_2.FinancialPlanning.repository;
+package com.group_2.FinancialPlanning.repositories;
 
-import com.group_2.FinancialPlanning.entity.MonthlyReportDetails;
+import com.group_2.FinancialPlanning.entities.MonthlyReportDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
