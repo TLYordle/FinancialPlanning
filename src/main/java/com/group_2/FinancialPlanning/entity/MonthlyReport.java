@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.sql.Date;
 
@@ -14,6 +14,7 @@ public class MonthlyReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
+
     private String reportName;
     private String monthName;
     private Integer termId;

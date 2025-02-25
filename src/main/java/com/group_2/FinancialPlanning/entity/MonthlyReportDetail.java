@@ -4,13 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "monthly_report_details")
-public class MonthlyReportDetails {
+public class MonthlyReportDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer monthlyReportDetailsId;
