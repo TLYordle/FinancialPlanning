@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:63343")
@@ -73,7 +74,8 @@ public class TermController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTerm(@PathVariable Integer id, @RequestBody Term termDetails) {
-        if (termService.findByTermNameAndStatus(termDetails.getTermName(), termDetails.getStatus()) != null) {
+        Term checkExistingTerm = termService.findByTermNameAndStatus(termDetails.getTermName(), termDetails.getStatus());
+        if (checkExistingTerm != null && !Objects.equals(checkExistingTerm.getTermId(), id)) {
             return ResponseEntity.badRequest().body("This term name with status already exist!");
         }
         return ResponseEntity.ok(termService.updateTerm(id, termDetails));

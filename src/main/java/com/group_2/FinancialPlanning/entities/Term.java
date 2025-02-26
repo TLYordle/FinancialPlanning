@@ -45,6 +45,9 @@ public class Term {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
+
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;

@@ -25,11 +25,11 @@
 </div>
 <div class="bg-gray-400 p-2 flex justify-between items-center">
     <nav class="flex space-x-4">
-        <a class="text-black" href="../Admin/home_admin.html">Home</a>
+        <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
         <a class="text-black" href="../FinancialPlan/Plan_list.html">Financial plan</a>
         <a class="text-black" href="../Report/monthly_report_staff.html">Financial Report</a>
         <a class="text-black font-bold" href="listTerm.html">Term Management</a>
-        <a class="text-black" href="../Admin/list_user.html">User Management</a>
+        <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
     </nav>
 </div>
 
@@ -45,6 +45,7 @@
                     placeholder="Search"
             />
             <select id="statusFilter" class="border p-2 rounded w-48">
+                <option value="ALL">ALL</option>
                 <option value="NEW">NEW</option>
                 <option value="INPROGRESS">INPROGRESS</option>
                 <option value="CLOSED">CLOSED</option>
@@ -89,152 +90,135 @@
 </div>
 
 <script>
-    async function fetchTerms() {
-      try {
-        let response = await fetch('http://localhost:8080/api/terms');
-        let data = await response.json();
+    async function fetchTerms(url = "http://localhost:8080/api/terms") {
+        try {
+            let userIdLocalStorage = localStorage.getItem("user_id");
+            let userResponse = await fetch(`http://localhost:8080/api/users/${userIdLocalStorage}`);
+            let user = await userResponse.json();
+            let response = await fetch(url);
+            let data = await response.json();
+            renderTable(data, user.role, userIdLocalStorage);
+            return user.role;
+        } catch (error) {
+            console.error("Error fetching terms:", error);
+        }
+    }
+
+    // Hàm tự chạy (Immediately Invoked Async Function Expression - IIFE)
+    (async function() {
+        let role = await fetchTerms();
+
+        if (role !== 'ADMIN') {
+            let homePage = document.querySelector('.homePage');
+            let userPage = document.querySelector('.userPage');
+            homePage.href = '../home.html';
+            userPage.style.display = 'none';
+        }
+    })();
+
+    function renderTable(terms, role, userIdLocalStorage) {
         let tableBody = document.getElementById("termTable");
         tableBody.innerHTML = "";
 
-        data.forEach(term => {
-        if (term.createdBy.role != 'FINANCIAL STAFF') {
-            let row = `
-            <tr class="border-t">
-              <td class="px-4 py-2 border text-center">${term.termName}</td>
-              <td class="px-4 py-2 border text-center">${new Date(term.startDate).toLocaleDateString()}</td>
-              <td class="px-4 py-2 border text-center">${new Date(term.endDate).toLocaleDateString()}</td>
-              <td class="px-4 py-2 border text-center">${term.status}</td>
-              <td class="px-4 py-2 border space-x-2 text-center">
-                <button class="text-blue-500 ml-2" onclick="viewTerm(${term.termId})">
-                    <i class="fas fa-eye"></i>
-                </button>
+        // Lọc các terms chưa bị xóa mềm
+        let filteredTerms = terms.filter(term =>
+            !term.deleted && term.createdBy.user_id === parseInt(userIdLocalStorage)
+        );
+
+        if (filteredTerms.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-2">No terms found</td></tr>`;
+            return;
+        }
+        filteredTerms.forEach(term => {
+            let actions = `
+            <button class="text-blue-500 ml-2" onclick="viewTerm(${term.termId})">
+                <i class="fas fa-eye"></i>
+            </button>`;
+
+            if (role !== "STAFF") {
+                actions += `
                 <button class="text-yellow-500 ml-2" onclick="editTerm(${term.termId})">
                     <i class="fas fa-edit"></i>
                 </button>
                 <button class="text-red-500 ml-2" onclick="openConfirmModal(${term.termId})">
                     <i class="fas fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          `;
-          tableBody.innerHTML += row;
-        } else {
+                </button>`;
+            }
+
             let row = `
             <tr class="border-t">
-              <td class="px-4 py-2 border text-center">${term.termName}</td>
-              <td class="px-4 py-2 border text-center">${new Date(term.startDate).toLocaleDateString()}</td>
-              <td class="px-4 py-2 border text-center">${new Date(term.endDate).toLocaleDateString()}</td>
-              <td class="px-4 py-2 border text-center">${term.status}</td>
-              <td class="px-4 py-2 border space-x-2 text-center">
-                <button class="text-blue-500 ml-2" onclick="viewTerm(${term.termId})">
-                    <i class="fas fa-eye"></i>
-                </button>
-              </td>
-            </tr>
-          `;
-          tableBody.innerHTML += row;
-        }
+                <td class="px-4 py-2 border text-center">${term.termName}</td>
+                <td class="px-4 py-2 border text-center">${new Date(term.startDate).toLocaleDateString()}</td>
+                <td class="px-4 py-2 border text-center">${new Date(term.endDate).toLocaleDateString()}</td>
+                <td class="px-4 py-2 border text-center">${term.status}</td>
+                <td class="px-4 py-2 border space-x-2 text-center">${actions}</td>
+            </tr>`;
+
+            tableBody.innerHTML += row;
         });
-      } catch (error) {
-        console.error("Error fetching terms:", error);
-      }
     }
 
     function viewTerm(termId) {
-        // Chuyển hướng sang viewTerm.html và truyền termId qua URL
         window.location.href = `viewTerm.html?termId=${termId}`;
     }
 
     function editTerm(termId) {
-        // Chuyển hướng sang viewTerm.html và truyền termId qua URL
         window.location.href = `editTerm.html?termId=${termId}`;
     }
 
     async function searchTerms() {
         let searchValue = document.getElementById("search").value.trim();
         let statusValue = document.getElementById("statusFilter").value;
-        // Tạo URL động
-        let url = "http://localhost:8080/api/terms/search?";
-        if (searchValue) url += `name=${encodeURIComponent(searchValue)}&`;
-        if (statusValue) url += `status=${encodeURIComponent(statusValue)}`;
+        let url;
 
-        try {
-            let response = await fetch(url);
-            console.log(response)
-            let data = await response.json();
-            let tableBody = document.getElementById("termTable");
-            tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+        if (!searchValue) {
+            url = `http://localhost:8080/api/terms/status/${encodeURIComponent(statusValue)}`;
+        } else {
+            url = `http://localhost:8080/api/terms/search?name=${encodeURIComponent(searchValue)}`;
+            if (statusValue) url += `&status=${encodeURIComponent(statusValue)}`;
+        }
 
-            // Nếu có dữ liệu, hiển thị lên bảng
-            if (data) {
-                let terms = Array.isArray(data) ? data : [data];
-                terms.forEach(term => {
-                    let row = `
-                        <tr class="border-t">
-                            <td class="px-4 py-2 border text-center">${term.termName}</td>
-                            <td class="px-4 py-2 border text-center">${new Date(term.startDate).toLocaleDateString()}</td>
-                            <td class="px-4 py-2 border text-center">${new Date(term.endDate).toLocaleDateString()}</td>
-                            <td class="px-4 py-2 border text-center">${term.status}</td>
-                            <td class="px-4 py-2 border space-x-2 text-center">
-                                <button class="text-blue-500 ml-2" onclick="viewTerm(${term.termId})">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="text-yellow-500 ml-2" onclick="editTerm(${term.termId})">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-red-500 ml-2" onclick="openConfirmModal(${term.termId})">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                              </td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
-                });
-            } else {
-                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-2">No results found</td></tr>`;
-            }
-        } catch (error) {
-            console.error("Error fetching search results:", error);
+        if (statusValue === "ALL") {
+            fetchTerms();
+        } else {
+            fetchTerms(url);
         }
     }
 
     function openConfirmModal(termId) {
-        document.getElementById("confirmModal").classList.remove("hidden");
-        document.getElementById("confirmModal").setAttribute("data-term-id", termId);
+        let modal = document.getElementById("confirmModal");
+        modal.classList.remove("hidden");
+        modal.setAttribute("data-term-id", termId);
     }
-
 
     function closeConfirmModal() {
-      document.getElementById("confirmModal").classList.add("hidden");
+        document.getElementById("confirmModal").classList.add("hidden");
     }
 
-    function deleteTerm() {
-        const termId = document.getElementById("confirmModal").getAttribute("data-term-id");
+    async function deleteTerm() {
+        let termId = document.getElementById("confirmModal").getAttribute("data-term-id");
 
         if (!termId) {
             alert("Term ID not found!");
             return;
         }
 
-        fetch(`http://localhost:8080/api/terms/${termId}`, {
-            method: "DELETE"
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to delete term.");
-            }
+        try {
+            let response = await fetch(`http://localhost:8080/api/terms/${termId}`, { method: "DELETE" });
+
+            if (!response.ok) throw new Error("Failed to delete term.");
+
             alert("Term deleted successfully!");
             closeConfirmModal();
-            fetchTerms(); // Load lại danh sách
-        })
-        .catch(error => console.error("Error deleting term:", error));
+            fetchTerms();
+        } catch (error) {
+            console.error("Error deleting term:", error);
+        }
     }
 
-    // In ra term
-    document.addEventListener("DOMContentLoaded", fetchTerms);
-
-    // Thêm sự kiện khi nhấn nút "Search"
-    document.addEventListener("DOMContentLoaded", function () {
+    // Load terms khi trang được tải
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchTerms();
         document.querySelector(".bg-blue-500").addEventListener("click", searchTerms);
     });
 

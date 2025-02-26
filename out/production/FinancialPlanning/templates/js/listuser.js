@@ -1,0 +1,105 @@
+document.addEventListener("DOMContentLoaded", function () {
+  fetchUserData();
+});
+let allUsers = []; // Lưu danh sách user lấy từ API
+function fetchUserData() {
+  fetch("http://localhost:8080/api/users", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Dữ liệu API trả về:", data);
+
+      if (Array.isArray(data)) {
+        allUsers = data;  // Lưu dữ liệu vào biến toàn cục
+        displayUsers(allUsers); // Hiển thị danh sách ban đầu
+        } else {
+            console.error("Lỗi lấy dữ liệu: Dữ liệu API không đúng định dạng");
+        }
+    })
+    .catch((error) => console.error("Lỗi kết nối API:", error));
+}
+
+function displayUsers(users) {
+  const tableBody = document.querySelector("#userTable tbody");
+  tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+  users.forEach((user, index) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td class="py-2 px-4 border-b text-center">${index + 1}</td>
+      <td class="py-2 px-4 border-b text-center">${user.fullName || "N/A"}</td>
+      <td class="py-2 px-4 border-b text-center">${user.email}</td>
+      <td class="py-2 px-4 border-b text-center">${user.department}</td>
+      <td class="py-2 px-4 border-b text-center">${user.position}</td>
+      <td class="py-2 px-4 border-b text-center">
+        <button class="text-blue-500 ml-2" onclick="ToEditUser('${user.user_id}')">
+            <i class="fas fa-eye"></i>
+        </button>
+        <button class="text-yellow-500 ml-2" onclick="redirectToEditUser('${user.user_id}')">
+            <i class="fas fa-edit"></i>
+        </button>
+        <button class="text-red-500 ml-2" onclick="confirmDeleteUser('${user.user_id}')">
+            <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+
+function applyFilters() {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const selectedRole = document.getElementById("roleFilter").value;
+
+    const filteredUsers = allUsers.filter(user => {
+        const matchesName = user.fullName.toLowerCase().includes(searchValue);
+        const matchesRole = selectedRole === "" || user.role === selectedRole;
+        return matchesName && matchesRole;
+    });
+
+    displayUsers(filteredUsers);
+}
+
+function redirectToEditUser(userId) {
+    // Điều hướng sang trang edit_user.html với user_id trên URL
+    window.location.href = `edit_user.html?user_id=${userId}`;
+}
+
+function ToEditUser(userId) {
+    window.location.href = `user_details.html?user_id=${userId}`;
+}
+
+
+
+// Xác nhận xóa user
+function confirmDeleteUser(userId) {
+  const confirmDelete = confirm("Bạn chắc chắn muốn xóa user này?");
+  if (confirmDelete) {
+    deleteUser(userId);
+  }
+}
+
+// Gửi yêu cầu xóa user
+async function deleteUser(userId) {
+  const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+    method: "DELETE",
+    headers: {},
+  });
+
+  const data = await response.json();
+  console.log("Response:", data);
+
+  if (response.ok) {
+    alert("Xóa user thành công!");
+    location.reload(); // Tải lại trang sau khi xóa
+  } else {
+    alert("Lỗi khi xóa user!");
+  }
+}

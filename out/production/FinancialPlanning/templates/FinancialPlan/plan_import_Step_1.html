@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Financial Plan System
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-200">
+<!-- Header -->
+<div class="bg-gray-300 p-4 flex justify-between items-center" style="height: 80px;">
+    <div class="flex items-center">
+    <span class="text-lg font-bold">
+     FINANCIAL PLAN SYSTEM
+    </span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-4">
+     <span class="block font-bold">
+      tranglth
+     </span>
+            <span class="text-sm text-gray-600">
+      Accounting depart
+     </span>
+        </div>
+        <i class="fas fa-user ml-2">
+        </i>
+        <button class="bg-gray-400 text-white py-2 px-4 rounded ml-4" type="button">
+            Logout
+        </button>
+    </div>
+</div>
+<!-- Navigation -->
+<div class="bg-gray-400 p-2">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="#">
+            Home
+        </a>
+        <a class="text-black font-bold" href="#">
+            Financial plan
+        </a>
+        <a class="text-black" href="#">
+            Financial Report
+        </a>
+        <a class="text-black" href="#">
+            Term Management
+        </a>
+        <a class="text-black" href="#">
+            User Management
+        </a>
+    </nav>
+</div>
+<!-- Main Content -->
+<div class="p-8">
+    <div class="bg-white p-6 rounded shadow-md">
+        <h1 class="text-xl font-bold mb-4">
+            Financial Plan
+        </h1>
+        <p class="text-sm text-gray-600 mb-4">
+            Plan List &gt; Import Plan
+        </p>
+        <h2 class="text-lg font-semibold mb-4">
+            Step 1/2: Please select a file to import
+        </h2>
+        <form id = "imports1">
+            <div class="mb-4">
+                <label class="block text-gray-700" for="term">
+                    Term
+                </label>
+                <select class="w-1/2 p-2 border border-gray-300 rounded" id="term">
+                    <option>
+                        Select
+                    </option>
+                </select>
+            </div>
+            <div class="mb-4 flex items-center">
+                <div class="w-1/2">
+                    <label class="block text-gray-700" for="file">
+                        File
+                    </label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="file" type="file"/>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Allowed file type: xls, xlsx, csv
+                        <br/>
+                        Maximum volume: 500MB
+                    </p>
+                </div>
+                <a class="text-blue-600 ml-4 self-center" href="#">
+                    File Template
+                </a>
+            </div>
+            <div class="flex justify-between mt-6">
+                <button class="bg-gray-400 text-white py-2 px-4 rounded" type="button">
+                    Back
+                </button>
+                <button id ="bimport" class="bg-gray-400 text-white py-2 px-4 rounded">
+                    Import
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../js/importplans1.js"></script>
+<script>
+    var fullName = localStorage.getItem("full_name")
+    var role = localStorage.getItem("role")
+    var span = document.getElementById("full_name")
+    var spanRole = document.getElementById("role")
+    span.textContent = fullName
+    spanRole.textContent = role
+</script>
+</body>
+</html>

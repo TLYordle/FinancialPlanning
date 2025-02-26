@@ -1,43 +1,43 @@
 async function login(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  try {
-    const response = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-      }),
-    });
+    try {
+        const response = await fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+            }),
+        });
 
-    const dt = await response.json();
-    if (!response.ok) throw new Error(dt.message || "Đăng nhập thất bại");
+        const dt = await response.json();
+        if (!response.ok) throw new Error(dt.message || "Đăng nhập thất bại");
 
-    const token = dt.result.token;
-    localStorage.setItem("token", token);
+        const token = dt.result.token;
+        localStorage.setItem("token", token);
 
-    // Giải mã token để lấy thông tin
-    const payloadBase64 = token.split(".")[1];
-    const decodedPayload = JSON.parse(decodeURIComponent(escape(atob(payloadBase64))));
+        // Giải mã token để lấy thông tin
+        const payloadBase64 = token.split(".")[1];
+        const decodedPayload = JSON.parse(decodeURIComponent(escape(atob(payloadBase64))));
 
-    const fullName = decodedPayload.full_name;
-    const roles = decodedPayload.scope;
-    const user_id = decodedPayload.sub; 
+        const fullName = decodedPayload.full_name;
+        const roles = decodedPayload.scope;
+        const user_id = decodedPayload.sub;
 
-    localStorage.setItem("full_name", fullName);
-    localStorage.setItem("user_id", user_id)
+        localStorage.setItem("full_name", fullName);
+        localStorage.setItem("user_id", user_id)
 
-    if (roles.includes("ADMIN")) {
-      localStorage.setItem("role", "ADMIN");
-      window.location.href = "home_admin.html";
-    } else {
-      localStorage.setItem("role", "USER");
-      window.location.href = "home.html";
+        if (roles.includes("ADMIN")) {
+            localStorage.setItem("role", "ADMIN");
+            window.location.href = "Admin/home_admin.html";
+        } else {
+            localStorage.setItem("role", "USER");
+            window.location.href = "home.html";
+        }
+    } catch (error) {
+        console.error("Lỗi đăng nhập:", error.message);
     }
-  } catch (error) {
-    console.error("Lỗi đăng nhập:", error.message);
-  }
 }

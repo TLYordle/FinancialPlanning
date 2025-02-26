@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Financial Plan System - User List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+    <div class="flex items-center">
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+        </div>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+    </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="home_admin.html">Home</a>
+        <a class="text-black" href="#">Financial plan</a>
+        <a class="text-black" href="../Report/monthly_report_staff.html">Financial Report</a>
+        <a class="text-black" href="../Term/listTerm.html">Term Management</a>
+        <a class="text-black font-bold" href="list_user.html">User Management</a>
+    </nav>
+</div>
+<div class="bg-gray-100 flex justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-7xl" style="margin-top: 30px">
+        <h2 class="text-xl font-semibold mb-4">User List</h2>
+        <div class="flex items-center mb-4">
+            <input type="text" id="searchInput" placeholder="Search by user name" class="border border-gray-300 rounded-md p-2 mr-2 flex-grow">
+            <select id="roleFilter" class="border border-gray-300 rounded-md p-2 mr-2">
+                <option value="">Select Role</option>
+                <option value="ADMIN">Admin</option>
+                <option value="STAFF">Staff</option>
+                <option value="ACCOUNTANT">ACCOUNTANT</option>
+            </select>
+            <button onclick="applyFilters()" class="bg-blue-500 text-white px-4 py-2 rounded-md">Search</button>
+            <button class="bg-green-500 text-white px-4 py-2 rounded-md ml-2"><a href="create_user.html">Add</a></button>
+        </div>
+        <table id="userTable" class="min-w-full bg-white border border-gray-200">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">ID</th>
+                <th class="py-2 px-4 border-b">Full Name</th>
+                <th class="py-2 px-4 border-b">Email</th>
+                <th class="py-2 px-4 border-b">Department</th>
+                <th class="py-2 px-4 border-b">Position</th>
+                <th class="py-2 px-4 border-b">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <div id="userDetailModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 class="text-xl font-semibold mb-4">Thông tin chi tiết User</h2>
+                <input type="hidden" id="detailUserId">
+                <p><strong>Full name:</strong> <span id="detailFullName"></span></p>
+                <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+                <p><strong>Phone number:</strong> <span id="detailPhoneNumber"></span></p>
+                <p><strong>Address:</strong> <span id="detailAddress"></span></p>
+                <p><strong>DOB:</strong> <span id="detailBirthday"></span></p>
+                <p><strong>Department:</strong> <span id="detailDepartment"></span></p>
+                <p><strong>Position:</strong> <span id="detailPosition"></span></p>
+                <p><strong>Role:</strong> <span id="detailRole"></span></p>
+                <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+                <div>
+                    <button onclick="closeUserDetailModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Close</button>
+                    <button onclick="ToEditUser()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Edit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/listuser.js"></script>
+<script src="../js/edit_user.js"></script>
+<script src="../js/logout.js"></script>
+<script>
+    var fullName = localStorage.getItem("full_name")
+    var role = localStorage.getItem("role")
+    var span = document.getElementById("full_name")
+    var spanRole = document.getElementById("role")
+    span.textContent = fullName
+    spanRole.textContent = role
+</script>
+</body>
+</html>

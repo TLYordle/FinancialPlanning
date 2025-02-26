@@ -46,10 +46,13 @@ public class TermService {
         term.setPlanDueDate(termDetails.getPlanDueDate());
         term.setReportDueDate(termDetails.getReportDueDate());
         term.setStatus(termDetails.getStatus());
+        term.setDeleted(false);
         return termRepository.save(term);
     }
 
     public void deleteTerm(Integer id) {
-        termRepository.deleteById(id);
+        Term term = termRepository.findById(id).orElseThrow(() -> new RuntimeException("Term not found"));
+        term.setDeleted(true);
+        termRepository.save(term);
     }
 }

@@ -24,11 +24,11 @@
 </div>
 <div class="bg-gray-400 p-2 flex justify-between items-center">
   <nav class="flex space-x-4">
-    <a class="text-black" href="../Admin/home_admin.html">Home</a>
+    <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
     <a class="text-black" href="#">Financial plan</a>
     <a class="text-black" href="../Report/monthly_report_staff.html">Financial Report</a>
     <a class="text-black font-bold" href="listTerm.html">Term Management</a>
-    <a class="text-black" href="../Admin/list_user.html">User Management</a>
+    <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
   </nav>
 </div>
 
@@ -42,7 +42,7 @@
     <form id="editTermForm" class="grid grid-cols-2 gap-6">
       <div>
         <label class="block font-bold">Term name</label>
-        <input type="text" id="termName" class="w-full p-2 border border-gray-300 rounded mt-1">
+        <input type="text" id="termName" class="w-full p-2 border border-gray-300 rounded mt-1" required>
       </div>
       <div>
         <label class="block font-bold">Duration</label>
@@ -54,19 +54,19 @@
       </div>
       <div>
         <label class="block font-bold">Start date</label>
-        <input type="date" id="startDate" class="w-full p-2 border border-gray-300 rounded mt-1">
+        <input type="date" id="startDate" class="w-full p-2 border border-gray-300 rounded mt-1" required>
       </div>
       <div>
         <label class="block font-bold">End date</label>
-        <input type="date" id="endDate" class="w-full p-2 border border-gray-300 rounded mt-1">
+        <input type="date" id="endDate" class="w-full p-2 border border-gray-300 rounded mt-1" required>
       </div>
       <div>
         <label class="block font-bold">Plan due date</label>
-        <input type="date" id="planDueDate" class="w-full p-2 border border-gray-300 rounded mt-1">
+        <input type="date" id="planDueDate" class="w-full p-2 border border-gray-300 rounded mt-1" required>
       </div>
       <div>
         <label class="block font-bold">Report due date</label>
-        <input type="date" id="reportDueDate" class="w-full p-2 border border-gray-300 rounded mt-1">
+        <input type="date" id="reportDueDate" class="w-full p-2 border border-gray-300 rounded mt-1" required>
       </div>
       <div>
         <label class="block font-bold">Status</label>
@@ -96,6 +96,30 @@
   </div>
 
 <script>
+  async function fetchTerms(url = "http://localhost:8080/api/terms") {
+    try {
+      let userIdLocalStorage = localStorage.getItem("user_id");
+      let userResponse = await fetch(`http://localhost:8080/api/users/${userIdLocalStorage}`);
+      let user = await userResponse.json();
+      let response = await fetch(url);
+      return user.role;
+    } catch (error) {
+      console.error("Error fetching terms:", error);
+    }
+  }
+
+  // Hàm tự chạy (Immediately Invoked Async Function Expression - IIFE)
+  (async function() {
+    let role = await fetchTerms();
+
+    if (role !== 'ADMIN') {
+      let homePage = document.querySelector('.homePage');
+      let userPage = document.querySelector('.userPage');
+      homePage.href = '../home.html';
+      userPage.style.display = 'none';
+    }
+  })();
+
   document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       const termId = params.get("termId");

@@ -27,6 +27,7 @@ CREATE TABLE terms (
     plan_due_date DATE NOT NULL,
     report_due_date DATE NOT NULL,
     status ENUM('NEW', 'INPROGRESS', 'CLOSED') DEFAULT 'NEW',
+    is_deleted boolean default false,
     created_by INT,
     FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
