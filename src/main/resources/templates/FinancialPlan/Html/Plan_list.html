@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+    Financial Plan System
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100">
+<!-- Header -->
+<div class="bg-gray-300 p-4 flex justify-between items-center" style="height: 80px;">
+  <div class="flex items-center">
+    <span class="text-lg font-bold">
+     FINANCIAL PLAN SYSTEM
+    </span>
+  </div>
+  <div class="flex items-center">
+    <div class="text-right mr-4">
+     <span class="block font-bold">
+      tranglth
+     </span>
+      <span class="text-sm text-gray-600">
+      Accounting depart
+     </span>
+    </div>
+    <i class="fas fa-user ml-2">
+    </i>
+    <button class="bg-gray-400 text-white py-2 px-4 rounded ml-4" type="button">
+      Logout
+    </button>
+  </div>
+</div>
+<!-- Navigation -->
+<div class="bg-gray-400 p-2">
+  <nav class="flex space-x-4">
+    <a class="text-black" href="">
+      Home
+    </a>
+    <a class="text-black font-bold" href="#">
+      Financial plan
+    </a>
+    <a class="text-black" href="monthly_report_staff.html">
+      Financial Report
+    </a>
+    <a class="text-black" href="listTerm.html">
+      Term Management
+    </a>
+  </nav>
+</div>
+<!-- Body -->
+<div class="p-4">
+  <h1 class="text-xl font-bold">
+    Financial Plan
+  </h1>
+  <p class="text-sm text-gray-500">
+    Plan List
+  </p>
+  <div class="flex items-center space-x-2 mt-4">
+    <input class="border p-2 rounded w-1/4" placeholder="Search" type="text"/>
+    <select class="border p-2 rounded">
+      <option>Department</option>
+      <option>IT</option>
+      <option>HR</option>
+      <option>Finance </option>
+      <option>Communication</option>
+      <option>Marketing</option>
+      <option>Accounting</option>
+    </select>
+    <select id ="optionterm" class="border p-2 rounded">
+      <option>
+        Term
+      </option>
+    </select>
+    <select class="border p-2 rounded">
+      <option>Status</option>
+      <option>NEW</option>
+      <option>WAITING FOR APPROVAL,</option>
+      <option>APPROVED</option>
+      <option>CLOSED</option>
+
+    </select>
+    <button class="bg-gray-400 text-white p-2 rounded">
+      Search
+    </button>
+    <button class="bg-gray-400 text-white p-2 rounded">
+      Import
+    </button>
+  </div>
+  <table id="PlansTable" class="min-w-full bg-white border border-gray-200">
+    <thead>
+    <tr>
+      <th class="py-2 px-4 border-b">No.</th>
+      <th class="py-2 px-4 border-b">Plan</th>
+      <th class="py-2 px-4 border-b">Term</th>
+      <th class="py-2 px-4 border-b">Department</th>
+      <th class="py-2 px-4 border-b">Status</th>
+      <th class="py-2 px-4 border-b">Version</th>
+      <th class="py-2 px-4 border-b">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  <div class="flex justify-between items-center mt-4">
+    <span class="text-sm text-gray-500" id="rowsCount">0/0 rows</span>
+    <div class="flex space-x-2">
+      <button class="p-2 rounded border">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="p-2 rounded border">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+</div>
+<script src="../js/planlist.js"></script>
+<script>
+  var fullName = localStorage.getItem("full_name")
+  var role = localStorage.getItem("role")
+  var span = document.getElementById("full_name")
+  var spanRole = document.getElementById("role")
+  span.textContent = fullName
+  spanRole.textContent = role
+</script>
+</body>
+</html>

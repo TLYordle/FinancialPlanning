@@ -1,4 +1,3 @@
-DROP DATABASE financial_planning;
 CREATE DATABASE financial_planning;
 USE financial_planning;
 -- Bảng users

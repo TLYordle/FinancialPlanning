@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Plan System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+<!-- Header -->
+<div class="bg-gray-300 p-4 flex justify-between items-center" style="height: 80px;">
+    <div class="flex items-center">
+    <span class="text-lg font-bold">
+     FINANCIAL PLAN SYSTEM
+    </span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-4">
+     <span class="block font-bold">
+      tranglth
+     </span>
+            <span class="text-sm text-gray-600">
+      Accounting depart
+     </span>
+        </div>
+        <i class="fas fa-user ml-2">
+        </i>
+        <button class="bg-gray-400 text-white py-2 px-4 rounded ml-4" type="button">
+            Logout
+        </button>
+    </div>
+</div>
+<!-- Navigation -->
+<div class="bg-gray-400 p-2">
+    <nav class="flex space-x-4">
+        <a class="text-black" href="#">
+            Home
+        </a>
+        <a class="text-black font-bold" href="#">
+            Financial plan
+        </a>
+        <a class="text-black" href="#">
+            Financial Report
+        </a>
+        <a class="text-black" href="#">
+            Term Management
+        </a>
+        <a class="text-black" href="#">
+            User Management
+        </a>
+    </nav>
+</div>
+<main class="p-8">
+    <div class="bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-bold mb-4">Financial Plan</h2>
+        <p class="text-sm text-gray-500 mb-4">Plan List &gt; Import Plan</p>
+        <h3 class="text-lg font-semibold mb-4">Step 2/2: Please preview the plan details before submitting</h3>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+                <p class="font-semibold">Term</p>
+                <p>Q3-2022</p>
+            </div>
+            <div>
+                <p class="font-semibold">Department</p>
+                <p>Marketing</p>
+            </div>
+            <div>
+                <p class="font-semibold">File</p>
+                <p>Marketing_Q32022_Plan.xlsx</p>
+            </div>
+        </div>
+        <h4 class="font-semibold mb-2">Preview</h4>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                <tr class="bg-gray-200">
+                    <th class="py-2 px-4 border-b">Expense</th>
+                    <th class="py-2 px-4 border-b">Cost type</th>
+                    <th class="py-2 px-4 border-b">Unit Price(VND)</th>
+                    <th class="py-2 px-4 border-b">Amount</th>
+                    <th class="py-2 px-4 border-b">Total (VND)</th>
+                    <th class="py-2 px-4 border-b">Project name</th>
+                    <th class="py-2 px-4 border-b">Supplier name</th>
+                    <th class="py-2 px-4 border-b">PIC</th>
+                    <th class="py-2 px-4 border-b">Notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="py-2 px-4 border-b">Promotion event</td>
+                    <td class="py-2 px-4 border-b">Direct cost</td>
+                    <td class="py-2 px-4 border-b">200,000,000</td>
+                    <td class="py-2 px-4 border-b">3</td>
+                    <td class="py-2 px-4 border-b">600,000,000</td>
+                    <td class="py-2 px-4 border-b">IN22</td>
+                    <td class="py-2 px-4 border-b">Internal</td>
+                    <td class="py-2 px-4 border-b">AnhMN2</td>
+                    <td class="py-2 px-4 border-b">N/A</td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-4 border-b">Social media</td>
+                    <td class="py-2 px-4 border-b">Direct cost</td>
+                    <td class="py-2 px-4 border-b">15,000,000</td>
+                    <td class="py-2 px-4 border-b">50</td>
+                    <td class="py-2 px-4 border-b">750,000,000</td>
+                    <td class="py-2 px-4 border-b">CAM1</td>
+                    <td class="py-2 px-4 border-b">Internal</td>
+                    <td class="py-2 px-4 border-b">LanNT12</td>
+                    <td class="py-2 px-4 border-b">N/A</td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-4 border-b">Office supplies</td>
+                    <td class="py-2 px-4 border-b">Administration cost</td>
+                    <td class="py-2 px-4 border-b">1,000,000</td>
+                    <td class="py-2 px-4 border-b">100</td>
+                    <td class="py-2 px-4 border-b">100,000,000</td>
+                    <td class="py-2 px-4 border-b">REC1</td>
+                    <td class="py-2 px-4 border-b">Hong Ha</td>
+                    <td class="py-2 px-4 border-b">HongHD9</td>
+                    <td class="py-2 px-4 border-b">N/A</td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-4 border-b">Internal training</td>
+                    <td class="py-2 px-4 border-b">Operating cost</td>
+                    <td class="py-2 px-4 border-b">2,000,000</td>
+                    <td class="py-2 px-4 border-b">6</td>
+                    <td class="py-2 px-4 border-b">12,000,000</td>
+                    <td class="py-2 px-4 border-b">RECT</td>
+                    <td class="py-2 px-4 border-b">Fresher Academy</td>
+                    <td class="py-2 px-4 border-b">LinhHM2</td>
+                    <td class="py-2 px-4 border-b">N/A</td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-4 border-b">Team Building</td>
+                    <td class="py-2 px-4 border-b">Administration cost</td>
+                    <td class="py-2 px-4 border-b">100,000,000</td>
+                    <td class="py-2 px-4 border-b">3</td>
+                    <td class="py-2 px-4 border-b">300,000,000</td>
+                    <td class="py-2 px-4 border-b">TB1</td>
+                    <td class="py-2 px-4 border-b">Saigon Tourist</td>
+                    <td class="py-2 px-4 border-b">TuNM</td>
+                    <td class="py-2 px-4 border-b">Approximate</td>
+                </tr>
+                <tr>
+                    <td class="py-2 px-4 border-b">Customer visit</td>
+                    <td class="py-2 px-4 border-b">Indirect cost</td>
+                    <td class="py-2 px-4 border-b">400,000,000</td>
+                    <td class="py-2 px-4 border-b">1</td>
+                    <td class="py-2 px-4 border-b">400,000,000</td>
+                    <td class="py-2 px-4 border-b">NSK</td>
+                    <td class="py-2 px-4 border-b">Internal</td>
+                    <td class="py-2 px-4 border-b">TrungDQ</td>
+                    <td class="py-2 px-4 border-b">Deposit required</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+            <div class="text-sm text-gray-500">10/60 rows</div>
+            <div class="flex space-x-2">
+                <button class="bg-gray-300 text-black py-2 px-4 rounded">Back</button>
+                <button class="bg-gray-300 text-black py-2 px-4 rounded">Submit</button>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    var fullName = localStorage.getItem("full_name")
+    var role = localStorage.getItem("role")
+    var span = document.getElementById("full_name")
+    var spanRole = document.getElementById("role")
+    span.textContent = fullName
+    spanRole.textContent = role
+</script>
+</body>
+</html>

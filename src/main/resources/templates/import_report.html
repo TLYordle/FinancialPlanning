@@ -163,5 +163,13 @@
 }
 
 </script>
+<script>
+    var fullName = localStorage.getItem("full_name")
+    var role = localStorage.getItem("role")
+    var span = document.getElementById("full_name")
+    var spanRole = document.getElementById("role")
+    span.textContent = fullName
+    spanRole.textContent = role
+</script>
 </body>
 </html>
