@@ -12,7 +12,7 @@ async function logout() {
         .then((dt) => {
           console.log(dt);
           if(dt.message === "Success"){
-            window.location.href = "login.html"
+            window.location.href = "../login.html"
           }
         });
     }

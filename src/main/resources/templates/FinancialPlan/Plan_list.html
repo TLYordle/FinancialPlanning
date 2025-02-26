@@ -11,44 +11,27 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-100">
-<!-- Header -->
-<div class="bg-gray-300 p-4 flex justify-between items-center" style="height: 80px;">
+<script src="./js/logout.js" type="text/javascript"></script>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
   <div class="flex items-center">
-    <span class="text-lg font-bold">
-     FINANCIAL PLAN SYSTEM
-    </span>
+    <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
   </div>
   <div class="flex items-center">
-    <div class="text-right mr-4">
-     <span class="block font-bold">
-      tranglth
-     </span>
-      <span class="text-sm text-gray-600">
-      Accounting depart
-     </span>
+    <div class="text-right mr-2">
+      <span class="block" id="full_name">tranglth</span>
+      <span class="text-sm text-gray-600" id="role">Accounting depart</span>
     </div>
-    <i class="fas fa-user ml-2">
-    </i>
-    <button class="bg-gray-400 text-white py-2 px-4 rounded ml-4" type="button">
-      Logout
-    </button>
+    <i class="fas fa-user ml-2"></i>
+    <button class="bg-gray-500 text-white p-2 ml-4" onclick="logout()">Logout</button>
   </div>
 </div>
-<!-- Navigation -->
-<div class="bg-gray-400 p-2">
+<div class="bg-gray-400 p-2 flex justify-between items-center">
   <nav class="flex space-x-4">
-    <a class="text-black" href="">
-      Home
-    </a>
-    <a class="text-black font-bold" href="#">
-      Financial plan
-    </a>
-    <a class="text-black" href="monthly_report_staff.html">
-      Financial Report
-    </a>
-    <a class="text-black" href="listTerm.html">
-      Term Management
-    </a>
+    <a class="text-black" href="../home.html">Home</a>
+    <a class="text-black font-bold" href="#">Financial plan</a>
+    <a class="text-black" href="#">Financial Report</a>
+    <a class="text-black" href="../Term/listTerm.html">Term Management</a>
+    <a class="text-black" href="../Admin/list_user.html">User Management</a>
   </nav>
 </div>
 <!-- Body -->
@@ -87,7 +70,7 @@
       Search
     </button>
     <button class="bg-gray-400 text-white p-2 rounded">
-      Import
+      <a href="/templates/FinancialPlan/plan_import_Step_1.html">Import</a>
     </button>
   </div>
   <table id="PlansTable" class="min-w-full bg-white border border-gray-200">
@@ -120,6 +103,7 @@
 
 </div>
 <script src="../js/planlist.js"></script>
+<script src="js/logout.js"></script>
 <script>
   var fullName = localStorage.getItem("full_name")
   var role = localStorage.getItem("role")

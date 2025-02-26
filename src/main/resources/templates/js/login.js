@@ -32,7 +32,7 @@ async function login(event) {
 
         if (roles.includes("ADMIN")) {
             localStorage.setItem("role", "ADMIN");
-            window.location.href = "home_admin.html";
+            window.location.href = "Admin/home_admin.html";
         } else {
             localStorage.setItem("role", "USER");
             window.location.href = "home.html";
