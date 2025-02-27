@@ -1,4 +1,4 @@
-package com.group_2.FinancialPlanning.repositories;
+package com.group_2.FinancialPlanning.services;
 
 import com.group_2.FinancialPlanning.entities.MonthlyReport;
 import com.group_2.FinancialPlanning.entities.Term;

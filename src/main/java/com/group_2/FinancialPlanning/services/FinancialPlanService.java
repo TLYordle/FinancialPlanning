@@ -21,7 +21,9 @@ public class FinancialPlanService {
 
     // Delete a financial plan by ID
     public void deletePlan(Integer planId) {
-        financialPlanRepository.deleteById(planId);
+        FinancialPlan plan = financialPlanRepository.findById(planId).orElseThrow(() -> new RuntimeException("Plan not found"));
+        plan.setIsdeleted(true);
+        financialPlanRepository.save(plan);
     }
 
     // View (export) a financial plan by ID

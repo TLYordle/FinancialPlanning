@@ -48,36 +48,32 @@
         </h2>
         <form id = "imports1">
             <div class="mb-4">
-                <label class="block text-gray-700" for="term">
+                <label class="block text-gray-700 font-medium text-lg" for="term">
                     Term
                 </label>
-                <select class="w-1/2 p-2 border border-gray-300 rounded" id="term">
+                <select class="custom-field w-full border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md" id="term">
                     <option>
                         Select
                     </option>
                 </select>
             </div>
-            <div class="mb-4 flex items-center">
-                <div class="w-1/2">
-                    <label class="block text-gray-700">
-                        File
-                    </label>
-                    <input class="w-full p-2 border border-gray-300 rounded" id="fileinput" type="file" accept=".xls,.xlsx,.csv"/>
-                    <p class="text-sm text-gray-600 mt-2">
-                        Allowed file type: xls, xlsx, csv
-                        <br/>
-                        Maximum volume: 500MB
-                    </p>
+            <div>
+                <label class="block text-gray-700 font-medium text-lg">File</label>
+                <div class="relative">
+                    <input type="file" id="fileInput" class="hidden" accept=".xls,.xlsx,.csv" onchange="handleFileSelect(event)">
+                    <div class="flex items-center justify-between border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                        <span id="fileDisplay" class="text-gray-700">Attach a file</span>
+                        <span class="custom-link">Choose file</span>
+                    </div>
                 </div>
-                <a class="text-blue-600 ml-4 self-center" href="#">
-                    File Template
-                </a>
+                <p class="text-gray-500 text-sm mt-2">Allowed file type: xls, xlsx, csv</p>
+                <p class="text-gray-500 text-sm">Maximum volume: 500MB</p>
             </div>
             <div class="flex justify-between mt-6">
-                <button class="bg-gray-400 text-white py-2 px-4 rounded" type="button">
-                    <a href="./Plan_list.html">Back</a>
+                <button class="bg-gray-400 text-white py-2 px-4 rounded back-btn" type="button">
+                   Back
                 </button>
-                <button onclick="goToDisplay()" id ="bimport" class="bg-gray-400 text-white py-2 px-4 rounded">
+                <button type="import" class="bg-gray-400 text-white py-2 px-4 rounded import-btn">
                     Import
                 </button>
             </div>
@@ -92,18 +88,6 @@
     var spanRole = document.getElementById("role")
     span.textContent = fullName
     spanRole.textContent = role
-</script>
-<script>
-    // Hàm chuyển hướng đến step 2
-    function goToDisplay() {
-        const term = document.getElementById('term').value;
-        if (!term) {
-            alert("Please select a term.");
-            return;
-        }
-        // Thực hiện hành động khác nếu cần trước khi chuyển hướng
-        window.location.href = 'plan_import_step_2.html'; // Đảm bảo đường dẫn chính xác
-    }
 </script>
 </body>
 </html>

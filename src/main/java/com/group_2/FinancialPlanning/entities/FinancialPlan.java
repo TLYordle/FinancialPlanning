@@ -46,6 +46,9 @@ public class FinancialPlan {
     @Column(name = "version")
     private Integer version = 1;
 
+    @Column(name = "is_deleted")
+    private boolean isdeleted = false;
+
     public enum Status {
         NEW,
         WAITING_FOR_APPROVAL,

@@ -36,45 +36,135 @@ function optiontermname(terms) {
     });
 }
 
-// importplans1.js
+function logout() {
+    alert("Logout successful!");
+}
 
-// Hàm xử lý import file Excel
-function handleFile(event) {
+const importButton = document.querySelector('.import-btn');
+if (importButton) {
+    importButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const fileDisplay = document.getElementById('fileDisplay');
+        if (fileDisplay && fileDisplay.textContent !== 'Attach a file') {
+            localStorage.setItem('importedFileName', fileDisplay.textContent);
+            window.location.href = 'plan_import_step_2.html';
+        } else {
+            alert("Vui lòng chọn một file trước khi import!");
+        }
+    });
+}
+
+const backButton = document.querySelector('.back-btn');
+if (backButton) {
+    backButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.location.href = 'Plan_list.html';
+    });
+}
+
+function handleFileSelect(event) {
     const file = event.target.files[0];
-    if (!file) {
-        alert("Please select a file.");
-        return;
-    }
+    const fileDisplay = document.getElementById('fileDisplay');
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+    if (file) {
+        const validTypes = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        if (!validTypes.includes(file.type)) {
+            alert("Vui lòng chọn file .xls hoặc .xlsx!");
+            event.target.value = '';
+            fileDisplay.textContent = 'Attach a file';
+            return;
+        }
+        if (file.size > 500 * 1024 * 1024) {
+            alert("File quá lớn! Dung lượng tối đa là 500MB.");
+            event.target.value = '';
+            fileDisplay.textContent = 'Attach a file';
+            return;
+        }
 
-        // Giả sử bạn muốn lấy dữ liệu từ sheet đầu tiên
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
+        fileDisplay.textContent = file.name;
+        localStorage.setItem('importedFileName', file.name);
 
-        // Chuyển đổi sheet thành JSON
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        // Lưu dữ liệu vào localStorage để sử dụng ở step 2
-        localStorage.setItem('excelData', JSON.stringify(jsonData));
-    };
-
-    reader.readAsArrayBuffer(file);
-}
-
-// Gán sự kiện cho input file
-document.getElementById('fileinput').addEventListener('change', handleFile);
-
-// Hàm chuyển hướng đến step 2
-function goToDisplay() {
-    const term = document.getElementById('term').value;
-    if (term == null && term == 'Select') {
-        alert("Please select a term.");
-        return;
-    } else {
-        window.location.href = 'plan_import_step_2.html';
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function (e) {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+            const sheetName = workbook.SheetNames[0];
+            const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+            localStorage.setItem('excelData', JSON.stringify(sheetData));
+            console.log("Dữ liệu Excel:", sheetData);
+        };
     }
 }
+
+async function fetchTerms(url = "http://localhost:8080/api/terms") {
+    try {
+        let userIdLocalStorage = localStorage.getItem("user_id");
+        let userResponse = await fetch(`http://localhost:8080/api/users/${userIdLocalStorage}`);
+        let user = await userResponse.json();
+        let response = await fetch(url);
+        let data = await response.json();
+        return user.role;
+    } catch (error) {
+        console.error("Error fetching terms:", error);
+    }
+}
+
+(async function() {
+    let role = await fetchTerms();
+
+    if (role !== 'ADMIN') {
+        let homePage = document.querySelector('.homePage');
+        let userPage = document.querySelector('.userPage');
+        homePage.href = '../user/home.html';
+        userPage.style.display = 'none';
+    }
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+    const termSelect = document.querySelector('#termSelect');
+    const monthSelect = document.querySelector('#monthSelect');
+
+    if (termSelect) {
+        termSelect.addEventListener('change', function (e) {
+            const selectedValue = e.target.value;
+            if (selectedValue) {
+                localStorage.setItem('selectedTerm', selectedValue);
+            } else {
+                localStorage.removeItem('selectedTerm');
+            }
+            if (monthSelect.value) {
+                localStorage.setItem('selectedMonth', monthSelect.value);
+            }
+        });
+
+        const savedTerm = localStorage.getItem('selectedTerm');
+        if (savedTerm) {
+            termSelect.value = savedTerm;
+        }
+    }
+
+    if (monthSelect) {
+        monthSelect.addEventListener('change', function (e) {
+            const selectedValue = e.target.value;
+            if (selectedValue) {
+                localStorage.setItem('selectedMonth', selectedValue);
+            } else {
+                localStorage.removeItem('selectedMonth');
+            }
+            if (termSelect.value) {
+                localStorage.setItem('selectedTerm', termSelect.value);
+            }
+        });
+
+        const savedMonth = localStorage.getItem('selectedMonth');
+        if (savedMonth) {
+            monthSelect.value = savedMonth;
+        }
+    }
+});
+
+var fullName = localStorage.getItem("full_name");
+var role = localStorage.getItem("role");
+document.getElementById("full_name").textContent = fullName;
+document.getElementById("role").textContent = role;

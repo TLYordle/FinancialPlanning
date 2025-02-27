@@ -42,6 +42,7 @@ CREATE TABLE financial_plans (
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('NEW', 'WAITING FOR APPROVAL', 'APPROVED', 'CLOSED') DEFAULT 'NEW',
     version int DEFAULT 1,
+    is_deleted boolean default false,
     FOREIGN KEY (term_id) REFERENCES terms(term_id),
     FOREIGN KEY (uploaded_by) REFERENCES users(user_id)
 );
