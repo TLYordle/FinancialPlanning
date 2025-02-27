@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetchPlansData();
 });
-let allPlans = []; // Lưu danh sách user lấy từ API
+let allPlans = [];
 function fetchPlansData() {
     fetch("http://localhost:8080/api/financialplans/list", {
         method: "GET",
@@ -71,7 +71,7 @@ function displayPlans(plans) {
             <td class="py-2 px-4 border-b text-center">${plan.status}</td>
             <td class="py-2 px-4 border-b text-center">${plan.version}</td>
             <td class="py-2 px-4 border-b text-center">
-                <button class="text-blue-500 ml-2" onclick="viewPlanDetails('${plan.id}')">
+                <button class="text-blue-500 ml-2" onclick="viewPlanDetails('${plan.planId}')">
                     <i class="fas fa-eye"></i>
                 </button>
                 ${deleteButtonHTML} <!-- Nút xoá chỉ hiện nếu là STAFF -->
@@ -117,6 +117,6 @@ function viewPlan(planId) {
 
 
 function viewPlanDetails(planId) {
-    window.location.href = `plan_details.html?planId=${planId}`;
+    window.location.href = `plandetail.html?planId=${planId}`;
 }
 

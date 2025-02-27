@@ -1,6 +1,7 @@
 package com.group_2.FinancialPlanning.controllers;
 
 import com.group_2.FinancialPlanning.entities.FinancialPlanDetail;
+import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.services.FinancialPlanDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/financial-plans")
+@RequestMapping("/financialplansdetail")
 public class FinancialPlanDetailController {
 
     @Autowired
@@ -40,5 +42,15 @@ public class FinancialPlanDetailController {
             @RequestBody FinancialPlanDetail updatedDetail) {
         FinancialPlanDetail plan = financialplandetailservice.updatePlan(id, updatedDetail);
         return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<FinancialPlanDetail>> getplandetailByplanId(@PathVariable("id") Integer id) {
+        Optional<FinancialPlanDetail> financialflandetail = financialplandetailservice.getplandetailByplanId(id);
+        if (financialflandetail != null) {
+            return ResponseEntity.ok(financialflandetail);
+        } else {
+            return ResponseEntity.notFound().build();
+
+        }
     }
 }

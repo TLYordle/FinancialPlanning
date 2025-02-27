@@ -1,11 +1,13 @@
 package com.group_2.FinancialPlanning.services;
 
+import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.repositories.FinancialPlanDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.group_2.FinancialPlanning.entities.FinancialPlanDetail;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FinancialPlanDetailService {
@@ -37,5 +39,9 @@ public class FinancialPlanDetailService {
         existingDetail.setStatusExpense(updatedDetail.getStatusExpense());
         // Update total if necessary (or handle it in DB)
         return financialplandetailrepository.save(existingDetail);
+    }
+    public Optional<FinancialPlanDetail> getplandetailByplanId(Integer id) {
+        return financialplandetailrepository.findById(id);
+
     }
 }

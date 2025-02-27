@@ -1,3 +1,4 @@
+USE financial_planning;
 -- Insert into users
 INSERT INTO users (full_name, email, password, address, birthday, phonenumber, position, department, role)
 VALUES
