@@ -92,3 +92,18 @@ function viewReport(reportId) {
   // Chuyển hướng đến trang report_details.html với reportId trong URL
     window.location.href = `report_details.html?reportId=${reportId}`;
 }
+async function checkUserRole() {
+    let role = localStorage.getItem("role");
+
+    if (role !== "ADMIN" || role !== "STAFF") {
+        let deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach(button => {
+            button.style.display = "none"; // Ẩn nút xóa
+        });
+    }
+}
+
+// Chạy hàm sau khi load danh sách báo cáo
+document.addEventListener("DOMContentLoaded", async function() {
+    await checkUserRole();
+});

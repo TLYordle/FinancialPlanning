@@ -44,6 +44,13 @@ public class ReportController {
             return ResponseEntity.badRequest().body("Error importing file: " + e.getMessage());
         }
     }
+
+    @GetMapping("/reports/{reportId}")
+    public ResponseEntity<MonthlyReport> getReportById(@PathVariable Integer reportId) {
+        MonthlyReport report = reportService.getReportById(reportId);
+        return ResponseEntity.ok(report);
+    }
+
     @GetMapping("/reports")
     public List<MonthlyReport> getAllReports() {
         return reportService.getAllReports();

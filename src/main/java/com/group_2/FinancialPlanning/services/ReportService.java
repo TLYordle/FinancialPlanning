@@ -2,8 +2,6 @@ package com.group_2.FinancialPlanning.services;
 
 import com.group_2.FinancialPlanning.entities.MonthlyReport;
 import com.group_2.FinancialPlanning.entities.MonthlyReportDetails;
-import com.group_2.FinancialPlanning.entities.Term;
-import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.repositories.MonthlyReportDetailsRepository;
 import com.group_2.FinancialPlanning.repositories.TermsRepository;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -76,34 +74,7 @@ public class ReportService {
         }
     }
 
-    @Transactional
-//    public void saveReportToDatabase(String term, String month, List<MonthlyReportDetails> details, User user) {
-//        try {
-//            Term termEntity = termsRepository.findByTermNameAndStatus(term, Term.Status.NEW);
-//            if (termEntity == null) {
-//                termEntity = new Term();
-//                termEntity.setTermName(term);
-//                termEntity.setDuration(Term.Duration.valueOf("MONTHLY"));
-//                termEntity.setCreatedBy(userService.getUserById(Long.valueOf(user.getUser_id())).orElse(null));
-//                termsRepository.save(termEntity);
-//            }
-//
-//            MonthlyReport report = new MonthlyReport();
-//            report.setReportName("Monthly Report - " + month);
-//            report.setMonthName(month);
-//            report.setTermId(termEntity.getTermId());
-//            report.setUserId(user.getUser_id());
-//            report.setStatus("NEW");
-//            monthlyReportRepository.save(report);
-//
-//            for (MonthlyReportDetails detail : details) {
-//                detail.setReportId(report.getReportId());
-//                monthlyReportDetailsRepository.save(detail);
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException("Error saving report to database: " + e.getMessage(), e);
-//        }
-//    }
+
 
     private String getCellValue(Cell cell) {
         if (cell == null) return "";
@@ -145,5 +116,10 @@ public class ReportService {
     @Transactional
     public void deleteMonthlyReport(Integer reportId) {
         monthlyReportRepository.deleteById(reportId);
+    }
+
+    public MonthlyReport getReportById(Integer reportId) {
+        return monthlyReportRepository.findById(reportId)
+                .orElseThrow(() -> new RuntimeException("Report not found with ID: " + reportId));
     }
 }
