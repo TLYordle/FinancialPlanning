@@ -17,4 +17,5 @@ public interface MonthlyReportDetailsRepository extends JpaRepository<MonthlyRep
 
     // Tìm chi tiết báo cáo theo cost_type (nếu cần)
     List<MonthlyReportDetails> findByCostType(String costType);
+
 }

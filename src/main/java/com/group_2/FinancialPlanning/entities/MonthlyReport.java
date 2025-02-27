@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.sql.Date;
 
 @Entity
@@ -16,15 +15,31 @@ import java.sql.Date;
 @AllArgsConstructor
 @Table(name = "monthly_report")
 public class MonthlyReport {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
-    private String reportName;
-    private String monthName;
-    private Integer termId;
-    private Integer userId;
-    private String status;
-    private Date reportDate;
-    private Integer version;
 
+    @Column(name = "report_name", nullable = false)
+    private String reportName;
+
+    @Column(name = "month_name", nullable = false)
+    private String monthName;
+
+    @ManyToOne
+    @JoinColumn(name = "term_id", nullable = false) // Liên kết với cột term_id trong bảng monthly_report
+    private Term term;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // Liên kết với cột user_id trong bảng monthly_report
+    private User user;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @Column(name = "report_date")
+    private Date reportDate;
+
+    @Column(name = "version")
+    private Integer version;
 }
