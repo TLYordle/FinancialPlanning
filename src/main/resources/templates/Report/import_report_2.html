@@ -34,20 +34,20 @@
   </div>
   <div class="flex items-center">
     <div class="text-right mr-2">
-      <span class="block" id="full_name">tranglth</span>
-      <span class="text-sm text-gray-600" id="role">Accounting depart</span>
+      <span id = "full_name" class="block">tranglth</span>
+      <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
     </div>
     <i class="fas fa-user ml-2"></i>
-    <button class="bg-gray-500 text-white p-2 ml-4" onclick="logout()">Logout</button>
+    <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
   </div>
 </div>
 <div class="bg-gray-400 p-2 flex justify-between items-center">
   <nav class="flex space-x-4">
-    <a class="text-black" href="../Admin/home_admin.html">Home</a>
+    <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
     <a class="text-black" href="#">Financial plan</a>
     <a class="text-black font-bold" href="#">Financial Report</a>
     <a class="text-black" href="../Term/listTerm.html">Term Management</a>
-    <a class="text-black" href="../Admin/list_user.html">User Management</a>
+    <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
   </nav>
 </div>
 <!-- Main Content -->
@@ -160,6 +160,30 @@
         `</tr>`
     ).join("");
 }
+  async function fetchTerms(url = "http://localhost:8080/api/terms") {
+        try {
+            let userIdLocalStorage = localStorage.getItem("user_id");
+            let userResponse = await fetch(`http://localhost:8080/api/users/${userIdLocalStorage}`);
+            let user = await userResponse.json();
+            let response = await fetch(url);
+            let data = await response.json();
+            return user.role;
+        } catch (error) {
+            console.error("Error fetching terms:", error);
+        }
+    }
+
+    // Hàm tự chạy (Immediately Invoked Async Function Expression - IIFE)
+    (async function() {
+        let role = await fetchTerms();
+
+        if (role !== 'ADMIN') {
+            let homePage = document.querySelector('.homePage');
+            let userPage = document.querySelector('.userPage');
+            homePage.href = '../user/home.html';
+            userPage.style.display = 'none';
+        }
+    })();
 </script>
 <script>
   var fullName = localStorage.getItem("full_name")

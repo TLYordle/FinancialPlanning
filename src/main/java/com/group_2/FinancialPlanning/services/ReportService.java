@@ -31,6 +31,10 @@ public class ReportService {
     private final TermsRepository termsRepository;
     private final UserService userService;
 
+    public List<MonthlyReport> getAllReports() {
+        return monthlyReportRepository.findAll();
+    }
+
     @Autowired
     public ReportService(MonthlyReportRepository monthlyReportRepository,
                          MonthlyReportDetailsRepository monthlyReportDetailsRepository,
@@ -142,7 +146,8 @@ public class ReportService {
         return temporaryReportData.getOrDefault(month, new ArrayList<>());
     }
 
-    public void clearTemporaryReportData(String month) {
-        temporaryReportData.remove(month);
+    @Transactional
+    public void deleteMonthlyReport(Integer reportId) {
+        monthlyReportRepository.deleteById(reportId);
     }
 }

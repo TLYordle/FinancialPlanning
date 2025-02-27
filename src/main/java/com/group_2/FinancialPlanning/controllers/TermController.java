@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:63343")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/terms")
 public class TermController {
