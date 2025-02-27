@@ -6,6 +6,7 @@
     </title>
     <script src="https://cdn.tailwindcss.com">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-200">
@@ -77,10 +78,10 @@
             </div>
             <div class="mb-4 flex items-center">
                 <div class="w-1/2">
-                    <label class="block text-gray-700" for="file">
+                    <label class="block text-gray-700">
                         File
                     </label>
-                    <input class="w-full p-2 border border-gray-300 rounded" id="file" type="file"/>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="fileinput" type="file" accept=".xls,.xlsx,.csv"/>
                     <p class="text-sm text-gray-600 mt-2">
                         Allowed file type: xls, xlsx, csv
                         <br/>
@@ -93,9 +94,9 @@
             </div>
             <div class="flex justify-between mt-6">
                 <button class="bg-gray-400 text-white py-2 px-4 rounded" type="button">
-                    Back
+                    <a href="./Plan_list.html">Back</a>
                 </button>
-                <button id ="bimport" class="bg-gray-400 text-white py-2 px-4 rounded">
+                <button onclick="goToDisplay()" id ="bimport" class="bg-gray-400 text-white py-2 px-4 rounded">
                     Import
                 </button>
             </div>
@@ -111,5 +112,6 @@
     span.textContent = fullName
     spanRole.textContent = role
 </script>
+
 </body>
 </html>

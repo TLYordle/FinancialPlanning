@@ -72,7 +72,7 @@
         </div>
         <h4 class="font-semibold mb-2">Preview</h4>
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-300">
+            <table id="dataTable" class="min-w-full bg-white border border-gray-300">
                 <thead>
                 <tr class="bg-gray-200">
                     <th class="py-2 px-4 border-b">Expense</th>
@@ -172,6 +172,30 @@
     var spanRole = document.getElementById("role")
     span.textContent = fullName
     spanRole.textContent = role
+</script>
+<script>
+    function displayData() {
+        const data = JSON.parse(localStorage.getItem('excelData'));
+        const table = document.getElementById('dataTable');
+        table.innerHTML = '';
+
+        if (data) {
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        } else {
+            table.innerHTML = '<tr><td colspan="100%">Không có dữ liệu để hiển thị!</td></tr>';
+        }
+    }
+
+    // Hiển thị dữ liệu khi tải trang
+    window.onload = displayData;
 </script>
 </body>
 </html>

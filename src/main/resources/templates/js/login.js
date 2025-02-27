@@ -25,17 +25,22 @@ async function login(event) {
 
         const fullName = decodedPayload.full_name;
         const roles = decodedPayload.scope;
+        const department = decodedPayload.department;
         const user_id = decodedPayload.sub;
 
+        localStorage.setItem("department", department);
         localStorage.setItem("full_name", fullName);
         localStorage.setItem("user_id", user_id)
 
         if (roles.includes("ADMIN")) {
             localStorage.setItem("role", "ADMIN");
-            window.location.href = "Admin/home_admin.html";
+            window.location.href = "../Admin/home_admin.html";
+        } else if (roles.includes("STAFF")) {
+            localStorage.setItem("role", "STAFF");
+            window.location.href = "../user/home.html";
         } else {
-            localStorage.setItem("role", "USER");
-            window.location.href = "home.html";
+            localStorage.setItem("role", "ACCOUNTANT");
+            window.location.href = "../user/home.html";
         }
     } catch (error) {
         console.error("Lỗi đăng nhập:", error.message);
