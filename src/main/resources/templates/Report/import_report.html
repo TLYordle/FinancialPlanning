@@ -42,7 +42,7 @@
     <nav class="flex space-x-4">
         <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
         <a class="text-black" href="#">Financial plan</a>
-        <a class="text-black font-bold" href="#">Financial Report</a>
+        <a class="text-black font-bold" href="../Report/monthly_report_staff.html">Financial Report</a>
         <a class="text-black" href="../Term/listTerm.html">Term Management</a>
         <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
     </nav>
@@ -60,20 +60,29 @@
             <form class="mt-4 space-y-4">
                 <div>
                     <label class="block text-gray-700 font-medium mb-2 text-lg">Term</label>
-                    <select class="custom-field w-full custom-field w-full border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md">
+                    <select id="termSelect" class="custom-field w-full custom-field w-full border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md">
                         <option value="">Select</option>
-                        <option value="term1">Term 1</option>
-                        <option value="term2">Term 2</option>
+                        <option value="Term 1">Term 1</option>
+                        <option value="Term 2">Term 2</option>
                     </select>
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-medium mb-2 text-lg ">Month</label>
-                    <select class="custom-field w-full border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md">
+                    <select id="monthSelect" class="custom-field w-full border border-gray-300 rounded-md p-2 bg-gray-100 shadow-md">
                         <option value="">Select</option>
-                        <option value="january">January</option>
-                        <option value="february">February</option>
-                        <option value="march">March</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
                     </select>
                 </div>
 
@@ -185,6 +194,62 @@ async function fetchTerms(url = "http://localhost:8080/api/terms") {
             userPage.style.display = 'none';
         }
     })();
+document.addEventListener("DOMContentLoaded", function () {
+  const termSelect = document.querySelector('#termSelect');
+  const monthSelect = document.querySelector('#monthSelect');
+
+  // Xử lý sự kiện khi chọn một giá trị cho Term
+  if (termSelect) {
+    termSelect.addEventListener('change', function (e) {
+      const selectedValue = e.target.value;
+      if (selectedValue) {
+        localStorage.setItem('selectedTerm', selectedValue);
+        console.log('Selected term saved to localStorage:', selectedValue);
+      } else {
+        localStorage.removeItem('selectedTerm');
+        console.log('No term selected, removed from localStorage');
+      }
+      // Lưu cả tháng nếu đã chọn
+      if (monthSelect.value) {
+        localStorage.setItem('selectedMonth', monthSelect.value);
+        console.log('Selected month saved to localStorage:', monthSelect.value);
+      }
+    });
+
+    // Lấy giá trị Term từ localStorage khi tải trang
+    const savedTerm = localStorage.getItem('selectedTerm');
+    if (savedTerm) {
+      termSelect.value = savedTerm;
+      console.log('Loaded term from localStorage:', savedTerm);
+    }
+  }
+
+  // Xử lý sự kiện khi chọn một giá trị cho Month
+  if (monthSelect) {
+    monthSelect.addEventListener('change', function (e) {
+      const selectedValue = e.target.value;
+      if (selectedValue) {
+        localStorage.setItem('selectedMonth', selectedValue);
+        console.log('Selected month saved to localStorage:', selectedValue);
+      } else {
+        localStorage.removeItem('selectedMonth');
+        console.log('No month selected, removed from localStorage');
+      }
+      // Lưu cả term nếu đã chọn
+      if (termSelect.value) {
+        localStorage.setItem('selectedTerm', termSelect.value);
+        console.log('Selected term saved to localStorage:', termSelect.value);
+      }
+    });
+
+    // Lấy giá trị Month từ localStorage khi tải trang
+    const savedMonth = localStorage.getItem('selectedMonth');
+    if (savedMonth) {
+      monthSelect.value = savedMonth;
+      console.log('Loaded month from localStorage:', savedMonth);
+    }
+  }
+});
 </script>
 <script>
     var fullName = localStorage.getItem("full_name")

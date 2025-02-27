@@ -45,7 +45,7 @@
   <nav class="flex space-x-4">
     <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
     <a class="text-black" href="#">Financial plan</a>
-    <a class="text-black font-bold" href="#">Financial Report</a>
+    <a class="text-black font-bold" href="../Report/monthly_report_staff.html">Financial Report</a>
     <a class="text-black" href="../Term/listTerm.html">Term Management</a>
     <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
   </nav>
@@ -69,7 +69,7 @@
           </div>
           <div class="flex items-center space-x-2">
             <p class="text-gray-700 text-base font-medium">Department:</p>
-            <p id="departmentValue" class="text-gray-800 text-base">Marketing</p>
+            <p id="departmentValue" class="text-gray-800 text-base"></p>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -192,6 +192,28 @@
   var spanRole = document.getElementById("role")
   span.textContent = fullName
   spanRole.textContent = role
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Lấy giá trị từ localStorage
+      const savedTerm = localStorage.getItem('selectedTerm');
+      const savedMonth = localStorage.getItem('selectedMonth');
+
+      // Hiển thị giá trị trong HTML
+      if (savedTerm) {
+          document.getElementById('termValue').textContent = savedTerm;
+          console.log('Loaded term from localStorage:', savedTerm);
+      } else {
+          document.getElementById('termValue').textContent = 'None';
+      }
+
+      if (savedMonth) {
+          document.getElementById('monthValue').textContent = savedMonth;
+          console.log('Loaded month from localStorage:', savedMonth);
+      } else {
+          document.getElementById('monthValue').textContent = 'None';
+      }
+  });
 </script>
 </body>
 </html>
