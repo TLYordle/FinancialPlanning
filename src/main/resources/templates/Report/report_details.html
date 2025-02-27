@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Report Details - Financial Plan System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<div class="bg-gray-300 p-4 flex justify-between items-center">
+    <div class="flex items-center">
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
+    </div>
+    <div class="flex items-center">
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role"class="text-sm text-gray-600">Accounting depart</span>
+        </div>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
+    </div>
+</div>
+<div class="bg-gray-400 p-2 flex justify-between items-center">
+    <nav class="flex space-x-4">
+        <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
+        <a class="text-black" href="#">Financial plan</a>
+        <a class="text-black font-bold" href="../Report/monthly_report_staff.html">Financial Report</a>
+        <a class="text-black" href="../Term/listTerm.html">Term Management</a>
+        <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
+    </nav>
+</div>
+<div class="bg-gray-100 flex justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-7xl mt-6">
+        <div class="mb-4">
+            <h2 class="text-2xl font-semibold">Monthly Report</h2>
+            <p class="text-gray-500"><a href="monthly_report_staff.html" class="text-blue-500">Report List</a> > Report Details</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
+            <div class="grid grid-cols-2 gap-6 w-full"> <!-- Tăng gap từ 4 lên 6 để tách cột đều hơn -->
+                <div class="flex-1 space-y-4"> <!-- Thêm space-y-4 để tách các <p> trong cột trái -->
+                    <p class="m-0"><strong>Report:</strong> Buname_MMYYYY_Report</p>
+                    <p class="m-0"><strong>Term:</strong> Q4 2022</p>
+                    <p class="m-0"><strong>Month:</strong> November 2022</p>
+                    <p class="m-0"><strong>Department:</strong> BU 1</p>
+                    <p class="m-0"><strong>Status:</strong> New</p>
+                </div>
+                <div class="flex-1 space-y-4 text-left"> <!-- Thêm space-y-4 để tách các <p> trong cột phải -->
+                    <p class="m-0"><strong>Uploaded by:</strong> anhln2</p>
+                    <p class="m-0"><strong>Report due date:</strong> 28/10/2022</p>
+                    <p class="m-0"><strong>Date:</strong> 28/10/2022</p>
+                    <p class="m-0"><strong>Version:</strong> 2</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-end space-x-2 mb-4">
+            <button class="bg-gray-300 text-black p-2 rounded-md">Reup</button>
+            <button class="bg-red-500 text-white p-2 rounded-md">Export</button>
+        </div>
+        <table id="reportDetailsTable" class="w-full border-collapse text-center bg-gray-50 rounded-lg shadow-lg overflow-hidden">
+            <thead>
+            <tr class="bg-gradient-to-r from-gray-200 to-gray-300">
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">No.</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Expense</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Cost Type</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Unit Price (VND)</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Amount</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Total (VND)</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Project Name</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Supplier Name</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">PIC</th>
+                <th class="py-3 px-4 border-b font-semibold text-gray-700">Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="mt-4 flex justify-between items-center">
+            <span></span>
+            <div class="flex space-x-2">
+                <button class="bg-gray-300 p-2 rounded text-white"><</button>
+                <button class="bg-gray-300 p-2 rounded text-white">></button>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button class="bg-gray-300 text-black p-2 rounded-md back-btn">Back</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Hàm logout
+    function logout() {
+        alert("Đã đăng xuất thành công!");
+        localStorage.removeItem('authToken');
+        window.location.href = '../user/login.html'; // Chuyển hướng về trang login
+    }
+
+    // Lấy reportId từ URL (giả định truyền qua query param)
+    const urlParams = new URLSearchParams(window.location.search);
+    const reportId = urlParams.get('reportId');
+
+    // Lấy dữ liệu chi tiết báo cáo từ API
+    function fetchReportDetails(reportId) {
+        fetch(`http://localhost:8080/api/reports/monthly/${reportId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('authToken') // Thêm nếu cần authentication
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then((report) => {
+                console.log("Dữ liệu báo cáo chi tiết:", report);
+                displayReportDetails(report);
+            })
+            .catch((error) => {
+                console.error("Lỗi lấy dữ liệu báo cáo:", error);
+                alert("Có lỗi xảy ra khi lấy dữ liệu báo cáo. Vui lòng kiểm tra console để biết chi tiết.");
+            });
+    }
+
+    // Hiển thị thông tin chi tiết báo cáo
+    function displayReportDetails(report) {
+        // Hiển thị thông tin tổng quát
+        document.querySelector('.bg-gray-200 p:nth-child(1)').textContent = `Report: ${report.reportName || 'N/A'}`;
+        document.querySelector('.bg-gray-200 p:nth-child(2)').textContent = `Term: ${report.termId?.termName || report.termId || 'N/A'}`;
+        document.querySelector('.bg-gray-200 p:nth-child(3)').textContent = `Month: ${report.monthName || 'N/A'}`;
+        document.querySelector('.bg-gray-200 p:nth-child(4)').textContent = `Department: ${report.userId?.department || 'N/A'}`;
+        document.querySelector('.bg-gray-200 p:nth-child(5)').textContent = `Status: ${report.status || 'N/A'}`;
+        document.querySelector('.bg-gray-200 div.text-right p:nth-child(1)').textContent = `Uploaded by: ${report.userId?.fullName || 'N/A'}`;
+        document.querySelector('.bg-gray-200 div.text-right p:nth-child(2)').textContent = `Report due date: ${report.termId?.reportDueDate || 'N/A'}`;
+        document.querySelector('.bg-gray-200 div.text-right p:nth-child(3)').textContent = `Date: ${report.reportDate || 'N/A'}`;
+        document.querySelector('.bg-gray-200 div.text-right p:nth-child(4)').textContent = `Version: ${report.version || 1}`;
+
+        // Giả định totalExpense và biggestExpenditure được tính từ monthly_report_details
+        document.querySelector('.bg-gray-200 .mt-4 p:nth-child(1)').textContent = `Total Expense = ${report.totalExpense || '0'} VND`;
+        document.querySelector('.bg-gray-200 .mt-4 p:nth-child(2)').textContent = `Biggest Expenditure = ${report.biggestExpenditure || '0'} VND`;
+
+        // Lấy chi tiết từ monthly_report_details (giả định API trả về hoặc bạn gọi API riêng)
+        fetchReportDetailsData(report.reportId);
+    }
+
+    // Lấy chi tiết từ monthly_report_details
+    function fetchReportDetailsData(reportId) {
+        fetch(`http://localhost:8080/api/reports/monthly/${reportId}/details`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('authToken') // Thêm nếu cần authentication
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then((details) => {
+                console.log("Dữ liệu chi tiết monthly_report_details:", details);
+                displayReportDetailsTable(details);
+            })
+            .catch((error) => {
+                console.error("Lỗi lấy dữ liệu chi tiết:", error);
+                alert("Có lỗi xảy ra khi lấy dữ liệu chi tiết báo cáo. Vui lòng kiểm tra console để biết chi tiết.");
+            });
+    }
+
+    // Hiển thị bảng chi tiết báo cáo
+    function displayReportDetailsTable(details) {
+        const tableBody = document.querySelector("#reportDetailsTable tbody");
+        if (!tableBody) {
+            console.error("Không tìm thấy tbody trong #reportDetailsTable");
+            return;
+        }
+        tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+
+        details.forEach((detail, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="py-2 px-4 border-b">${index + 1}</td>
+                <td class="py-2 px-4 border-b">${detail.expense || "N/A"}</td>
+                <td class="py-2 px-4 border-b">${detail.costType || "N/A"}</td>
+                <td class="py-2 px-4 border-b">${detail.unitPrice?.toLocaleString() || "0"} VND</td>
+                <td class="py-2 px-4 border-b">${detail.amount || 0}</td>
+                <td class="py-2 px-4 border-b">${(detail.unitPrice * detail.amount)?.toLocaleString() || "0"} VND</td>
+                <td class="py-2 px-4 border-b">${detail.projectName || "N/A"}</td>
+                <td class="py-2 px-4 border-b">${detail.supplierName || "N/A"}</td>
+                <td class="py-2 px-4 border-b">${detail.pic || "N/A"}</td>
+                <td class="py-2 px-4 border-b">${detail.notes || "N/A"}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Xử lý nút Back
+    const backButton = document.querySelector('.back-btn');
+    if (backButton) {
+        backButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = 'monthly_report_staff.html';
+        });
+    }
+
+    // Gọi API để lấy dữ liệu chi tiết khi trang tải
+    if (reportId) {
+        fetchReportDetails(reportId);
+    } else {
+        console.error("Không tìm thấy reportId trong URL");
+        alert("Không có báo cáo được chọn. Vui lòng kiểm tra URL.");
+    }
+</script>
+<script>
+    var fullName = localStorage.getItem("full_name")
+    var role = localStorage.getItem("role")
+    var span = document.getElementById("full_name")
+    var spanRole = document.getElementById("role")
+    span.textContent = fullName
+    spanRole.textContent = role
+</script>
+</body>
+</html>
