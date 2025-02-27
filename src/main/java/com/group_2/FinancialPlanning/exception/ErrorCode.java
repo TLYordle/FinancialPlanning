@@ -10,7 +10,7 @@ public enum ErrorCode {
     EMAIL_NOT_FOUND(404, "Email not found", HttpStatus.NOT_FOUND),
     USER_NOT_FOUND(404,"User not found", HttpStatus.NOT_FOUND),
     EMAIL_EXISTED(409,"Email already existed", HttpStatus.CONFLICT),
-    UNAUTHENTICATED(401,"Unauthenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHENTICATED(401,"Wrong account or password", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(403, "You do not have permission", HttpStatus.FORBIDDEN),
     INVALID_KEY(400, "Invalid key", HttpStatus.BAD_REQUEST),
     ;

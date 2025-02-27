@@ -43,6 +43,7 @@ async function login(event) {
             window.location.href = "../user/home.html";
         }
     } catch (error) {
+        alert(error.message);
         console.error("Lỗi đăng nhập:", error.message);
     }
 }
