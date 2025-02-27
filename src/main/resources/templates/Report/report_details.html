@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 </head>
 
 <body>
@@ -54,9 +56,17 @@
                 </div>
             </div>
         </div>
+        <div class="bg-gray-100 p-4 rounded-lg mb-6 flex justify-between">
+            <div class="flex-1">
+                <p><strong>Total Expense = </strong> <span id="totalEx"></span></p>
+            </div>
+            <div class="flex-1 text-left">
+                <p><strong>Biggest Expenditure = </strong> <span id="biggest"></span></p>
+            </div>
+        </div>
 
         <div class="flex justify-end space-x-2 mb-4">
-            <button class="bg-gray-300 text-black p-2 rounded-md">Reup</button>
+            <button class="bg-gray-300 text-black p-2 rounded-md reup-btn">Re-up</button>
             <button class="bg-red-500 text-white p-2 rounded-md">Export</button>
         </div>
         <table id="reportDetailsTable" class="w-full border-collapse text-center bg-gray-50 rounded-lg shadow-lg overflow-hidden">
@@ -75,10 +85,7 @@
             <tbody>
             </tbody>
         </table>
-
-        <div class="mt-4">
-            <button class="bg-blue-54400 text-white p-2 rounded-md back-btn">Back</button>
-        </div>
+        <button type="button" class="custom-button text-white bg-blue-500 p-2 rounded back-btn mt-4">Back</button>
     </div>
 </div>
 
@@ -89,7 +96,15 @@
         localStorage.removeItem('authToken');
         window.location.href = '../user/login.html'; // Chuyển hướng về trang login
     }
+    document.addEventListener('DOMContentLoaded', function() {
+  const reupButton = document.querySelector('.reup-btn');
 
+  if (reupButton) {
+    reupButton.addEventListener('click', function() {
+      window.location.href = 'reup_rp.html';
+    });
+  }
+});
     document.addEventListener("DOMContentLoaded", function () {
     // Lấy reportId từ URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -186,6 +201,97 @@ function displayReportInfo(report) {
     document.getElementById("version").innerText = report.version || "N/A";
 }
 
+    function displayReportDetailsTable(details) {
+    const tableBody = document.querySelector("#reportDetailsTable tbody");
+    if (!tableBody) {
+        console.error("Không tìm thấy tbody trong #reportDetailsTable");
+        return;
+    }
+    tableBody.innerHTML = "";
+
+    let totalExpense = 0;
+
+    details.forEach((detail, index) => {
+        const total = detail.total || 0;
+        totalExpense += total; // Cộng tổng chi phí
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td class="py-2 px-4 border-b">${index + 1}</td>
+            <td class="py-2 px-4 border-b">${detail.expense || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.costType || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.unitPrice ? detail.unitPrice.toLocaleString() : "0"} VND</td>
+            <td class="py-2 px-4 border-b">${detail.amount || 0}</td>
+            <td class="py-2 px-4 border-b">${total.toLocaleString()} VND</td>
+            <td class="py-2 px-4 border-b">${detail.projectName || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.note || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+    document.getElementById("totalEx").innerText = totalExpense.toLocaleString() + " VND";
+}
+    function displayReportDetailsTable(details) {
+    const tableBody = document.querySelector("#reportDetailsTable tbody");
+    if (!tableBody) {
+        console.error("Không tìm thấy tbody trong #reportDetailsTable");
+        return;
+    }
+    tableBody.innerHTML = "";
+
+    let totalExpense = 0;
+    let maxExpenditure = 0;
+
+    details.forEach((detail, index) => {
+        const total = detail.total || 0;
+        totalExpense += total; // Cộng tổng chi phí
+
+        if (total > maxExpenditure) {
+            maxExpenditure = total; // Cập nhật giá trị lớn nhất
+        }
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td class="py-2 px-4 border-b">${index + 1}</td>
+            <td class="py-2 px-4 border-b">${detail.expense || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.costType || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.unitPrice ? detail.unitPrice.toLocaleString() : "0"} VND</td>
+            <td class="py-2 px-4 border-b">${detail.amount || 0}</td>
+            <td class="py-2 px-4 border-b">${total.toLocaleString()} VND</td>
+            <td class="py-2 px-4 border-b">${detail.projectName || "N/A"}</td>
+            <td class="py-2 px-4 border-b">${detail.note || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // Hiển thị tổng chi phí
+    document.getElementById("totalEx").innerText = totalExpense.toLocaleString() + " VND";
+    // Hiển thị khoản chi lớn nhất
+    document.getElementById("biggest").innerText = maxExpenditure.toLocaleString() + " VND";
+}
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const exportButton = document.querySelector(".bg-red-500.text-white.p-2.rounded-md");
+
+    if (exportButton) {
+        exportButton.addEventListener("click", function () {
+            exportTableToExcel();
+        });
+    }
+});
+
+    function exportTableToExcel() {
+    let table = document.getElementById("reportDetailsTable");
+    let ws = XLSX.utils.table_to_sheet(table); // Chuyển đổi bảng thành worksheet
+    let wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, "Report Details");
+
+    // Xuất file Excel với tên "Report_Details.xlsx"
+    XLSX.writeFile(wb, "Report_Details.xlsx");
+}
+
+
 </script>
 <script>
     var fullName = localStorage.getItem("full_name")
@@ -194,6 +300,58 @@ function displayReportInfo(report) {
     var spanRole = document.getElementById("role")
     span.textContent = fullName
     spanRole.textContent = role
+    document.addEventListener("DOMContentLoaded", function() {
+    const backButton = document.querySelector(".back-btn");
+
+    if (backButton) {
+        backButton.addEventListener("click", function() {
+            window.location.href = "monthly_report_staff.html";
+        });
+    }
+});
+    document.addEventListener("DOMContentLoaded", function () {
+    const reupButton = document.querySelector(".bg-gray-300.text-black.p-2.rounded-md");
+
+    if (reupButton) {
+        reupButton.addEventListener("click", function () {
+            // Lấy reportId từ URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const reportId = urlParams.get('reportId');
+
+            if (!reportId) {
+                alert("Không tìm thấy reportId trong URL!");
+                return;
+            }
+
+            // Lấy dữ liệu từ bảng
+            const tableRows = document.querySelectorAll("#reportDetailsTable tbody tr");
+            let reportData = [];
+
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+                let rowData = {
+                    no: cells[0].innerText,
+                    expense: cells[1].innerText,
+                    costType: cells[2].innerText,
+                    unitPrice: cells[3].innerText,
+                    amount: cells[4].innerText,
+                    total: cells[5].innerText,
+                    projectName: cells[6].innerText,
+                    notes: cells[7].innerText
+                };
+                reportData.push(rowData);
+            });
+
+            // Lưu dữ liệu vào localStorage
+            localStorage.setItem("reupReportData", JSON.stringify(reportData));
+
+            // Chuyển hướng đến trang reup_rp.html kèm theo reportId
+            window.location.href = `reup_rp.html?reportId=${reportId}`;
+        });
+    }
+});
+
+
 </script>
 </body>
 </html>

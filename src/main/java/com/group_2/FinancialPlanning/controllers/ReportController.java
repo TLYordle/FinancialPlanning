@@ -4,12 +4,16 @@ import com.group_2.FinancialPlanning.entities.MonthlyReport;
 import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -22,6 +26,28 @@ public class ReportController {
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
+
+
+    @PostMapping("/reports/create")
+    public ResponseEntity<?> addMonthlyReport(@RequestBody MonthlyReport monthlyReport) {
+        try {
+            MonthlyReport savedReport = reportService.saveMonthlyReport(monthlyReport);
+            return ResponseEntity.ok(savedReport);
+        } catch (IllegalArgumentException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("code", "400");
+            response.put("message", "Bad Request: " + e.getMessage());
+            response.put("timestamp", new java.util.Date().toString());
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("code", "500");
+            response.put("message", "Internal Server Error: " + e.getMessage());
+            response.put("timestamp", new java.util.Date().toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 
     @PostMapping("/import-report")
     public ResponseEntity<String> importReport(@RequestParam("file") MultipartFile file,

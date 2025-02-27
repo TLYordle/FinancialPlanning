@@ -116,3 +116,4 @@ CREATE TABLE invalidated_token(
     id varchar(255),
     expiry_time DATETIME(6)
 )
+

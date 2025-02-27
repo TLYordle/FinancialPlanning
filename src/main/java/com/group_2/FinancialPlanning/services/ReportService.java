@@ -2,7 +2,10 @@ package com.group_2.FinancialPlanning.services;
 
 import com.group_2.FinancialPlanning.entities.MonthlyReport;
 import com.group_2.FinancialPlanning.entities.MonthlyReportDetails;
+import com.group_2.FinancialPlanning.entities.Term;
+import com.group_2.FinancialPlanning.entities.User;
 import com.group_2.FinancialPlanning.repositories.MonthlyReportDetailsRepository;
+import com.group_2.FinancialPlanning.repositories.MonthlyReportRepository;
 import com.group_2.FinancialPlanning.repositories.TermsRepository;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -75,7 +78,6 @@ public class ReportService {
     }
 
 
-
     private String getCellValue(Cell cell) {
         if (cell == null) return "";
         switch (cell.getCellType()) {
@@ -121,5 +123,50 @@ public class ReportService {
     public MonthlyReport getReportById(Integer reportId) {
         return monthlyReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Report not found with ID: " + reportId));
+    }
+
+
+    @Transactional
+    public MonthlyReport saveMonthlyReport(MonthlyReport monthlyReport) {
+        if (monthlyReport.getTerm() == null || monthlyReport.getTerm().getTermId() == null) {
+            throw new IllegalArgumentException("Term is required and must have a valid termId");
+        }
+        if (monthlyReport.getUser() == null || monthlyReport.getUser().getUser_id() == null) {
+            throw new IllegalArgumentException("User is required and must have a valid userId");
+        }
+
+        // Kiểm tra termId tồn tại
+        Term term = termsRepository.findById(monthlyReport.getTerm().getTermId())
+                .orElseThrow(() -> new IllegalArgumentException("Term not found with ID: " + monthlyReport.getTerm().getTermId()));
+
+        // Kiểm tra userId tồn tại
+        User user = userService.getUserById(Long.valueOf(monthlyReport.getUser().getUser_id()))
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + monthlyReport.getUser().getUser_id()));
+
+        monthlyReport.setTerm(term);
+        monthlyReport.setUser(user);
+
+        // Đặt reportDate nếu chưa có
+        if (monthlyReport.getReportDate() == null) {
+            monthlyReport.setReportDate(new java.sql.Date(System.currentTimeMillis()));
+        }
+
+        try {
+            MonthlyReport savedReport = monthlyReportRepository.save(monthlyReport);
+
+            // Lưu các chi tiết (MonthlyReportDetails) nếu có trong temporaryReportData
+            List<MonthlyReportDetails> details = temporaryReportData.get(monthlyReport.getMonthName());
+            if (details != null && !details.isEmpty()) {
+                for (MonthlyReportDetails detail : details) {
+                    detail.setReportId(savedReport.getReportId());
+                    monthlyReportDetailsRepository.save(detail);
+                }
+                temporaryReportData.remove(monthlyReport.getMonthName());
+            }
+
+            return savedReport;
+        } catch (Exception e) {
+            throw new RuntimeException("Error saving monthly report: " + e.getMessage(), e);
+        }
     }
 }

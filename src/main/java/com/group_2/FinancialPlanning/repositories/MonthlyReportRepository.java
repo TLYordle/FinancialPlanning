@@ -1,9 +1,8 @@
-package com.group_2.FinancialPlanning.services;
+package com.group_2.FinancialPlanning.repositories;
 
 import com.group_2.FinancialPlanning.entities.MonthlyReport;
 import com.group_2.FinancialPlanning.entities.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 
@@ -38,6 +39,7 @@ public class MonthlyReport {
     private String status;
 
     @Column(name = "report_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date reportDate;
 
     @Column(name = "version")

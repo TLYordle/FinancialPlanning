@@ -20,12 +20,15 @@ public class MonthlyReportDetails {
     private Integer monthlyReportDetailsId;
     private String expense;
     private String costType;
+    @Column(nullable = false)
     private BigDecimal unitPrice;
+    @Column(nullable = false)
     private Integer amount;
+    @Column(insertable = false, updatable = false)
     private BigDecimal total;
     private String projectName;
     private String note;
-    private Integer reportId;
+    private Integer reportId; // Đây là trường bình thường, không phải quan hệ
     private BigDecimal totalExpense;
     private Integer totalUser;
 }
