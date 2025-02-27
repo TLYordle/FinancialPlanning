@@ -60,9 +60,6 @@ function handleFile(event) {
 
         // Lưu dữ liệu vào localStorage để sử dụng ở step 2
         localStorage.setItem('excelData', JSON.stringify(jsonData));
-
-        // Chuyển hướng đến step 2
-        window.location.href = './plan_import_step_2.html'; // Đảm bảo đường dẫn chính xác
     };
 
     reader.readAsArrayBuffer(file);
@@ -74,11 +71,10 @@ document.getElementById('fileinput').addEventListener('change', handleFile);
 // Hàm chuyển hướng đến step 2
 function goToDisplay() {
     const term = document.getElementById('term').value;
-    if (!term) {
+    if (term == null && term == 'Select') {
         alert("Please select a term.");
         return;
+    } else {
+        window.location.href = 'plan_import_step_2.html';
     }
-
-    // Thực hiện hành động khác nếu cần trước khi chuyển hướng
-    window.location.href = './plan_import_step_2.html'; // Đảm bảo đường dẫn chính xác
 }

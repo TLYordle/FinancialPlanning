@@ -10,47 +10,28 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-200">
-<!-- Header -->
-<div class="bg-gray-300 p-4 flex justify-between items-center" style="height: 80px;">
+<script src="../js/logout.js" type="text/javascript"></script>
+
+<div class="bg-gray-300 p-4 flex justify-between items-center">
     <div class="flex items-center">
-    <span class="text-lg font-bold">
-     FINANCIAL PLAN SYSTEM
-    </span>
+        <span class="text-lg font-bold">FINANCIAL PLAN SYSTEM</span>
     </div>
     <div class="flex items-center">
-        <div class="text-right mr-4">
-     <span class="block font-bold">
-      tranglth
-     </span>
-            <span class="text-sm text-gray-600">
-      Accounting depart
-     </span>
+        <div class="text-right mr-2">
+            <span id = "full_name" class="block">tranglth</span>
+            <span id = "role" class="text-sm text-gray-600">Accounting depart</span>
         </div>
-        <i class="fas fa-user ml-2">
-        </i>
-        <button class="bg-gray-400 text-white py-2 px-4 rounded ml-4" type="button">
-            Logout
-        </button>
+        <i class="fas fa-user ml-2"></i>
+        <button onclick="logout()" class="bg-gray-500 text-white p-2 ml-4">Logout</button>
     </div>
 </div>
-<!-- Navigation -->
-<div class="bg-gray-400 p-2">
+<div class="bg-gray-400 p-2 flex justify-between items-center">
     <nav class="flex space-x-4">
-        <a class="text-black" href="#">
-            Home
-        </a>
-        <a class="text-black font-bold" href="#">
-            Financial plan
-        </a>
-        <a class="text-black" href="#">
-            Financial Report
-        </a>
-        <a class="text-black" href="#">
-            Term Management
-        </a>
-        <a class="text-black" href="#">
-            User Management
-        </a>
+        <a class="text-black homePage" href="../Admin/home_admin.html">Home</a>
+        <a class="text-black font-bold" href="#">Financial plan</a>
+        <a class="text-black" href="../Report/monthly_report_staff.html">Financial Report</a>
+        <a class="text-black" href="../Term/listTerm.html">Term Management</a>
+        <a class="text-black userPage" href="../Admin/list_user.html">User Management</a>
     </nav>
 </div>
 <!-- Main Content -->
@@ -112,6 +93,17 @@
     span.textContent = fullName
     spanRole.textContent = role
 </script>
-
+<script>
+    // Hàm chuyển hướng đến step 2
+    function goToDisplay() {
+        const term = document.getElementById('term').value;
+        if (!term) {
+            alert("Please select a term.");
+            return;
+        }
+        // Thực hiện hành động khác nếu cần trước khi chuyển hướng
+        window.location.href = 'plan_import_step_2.html'; // Đảm bảo đường dẫn chính xác
+    }
+</script>
 </body>
 </html>
